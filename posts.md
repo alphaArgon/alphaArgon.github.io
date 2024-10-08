@@ -13,7 +13,7 @@ title: 所有文章
                 <figcaption class="post-list-caption">{{ post.title }}</figcaption>
                 <p class="post-list-excerpt">{{ post.excerpt }}</p>
 {%- if post.date -%}
-                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: {{ site.date_format }} }}</time>
+                <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: {{ site.date_format }}</time>
 {%- endif -%}
             </figure>
         </a>

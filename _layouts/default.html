@@ -9,58 +9,6 @@
     </title>
 </head>
 <body>
-    <nav class="site-nav" lang="en">
-        <ul class="site-nav-list">
-            <li><a href="{{ '/' | relative_url }}">Home</a></li>
-            <li><a href="{{ '/about' | relative_url }}">About</a></li>
-            <li><a href="{{ '/posts' | relative_url }}">Posts</a></li>
-        </ul>
-    </nav>
-    <nav class="link-nav" lang="en">
-        <ul class="link-nav-list">
-            <li><a href="https://github.com/alphaArgon"><i class="icon-github"></i><span class="visually-hidden">GitHub</span></a></li>
-            <li><a href="https://twitter.com/alpha_argon"><i class="icon-twitter"></i><span class="visually-hidden">Twitter</span></a></li>
-        </ul>
-    </nav>
-    <main class="content-container" lang="{{ page.lang | default: site.lang }}">
-{%- unless page.suppress_header -%}
-        <header role="banner" class="site-badge">
-            <span>://argon.red</span>
-    {%- if page.cover -%}
-            <img src="{{ page.cover | relative_url }}" class="header-banner-image">
-    {%- endif -%}
-        </header>
-{%- endunless -%}
-{%- if page.title -%}
-        <h1 class="content-title">
-            {{ page.title }}
-        </h1>
-{%- endif -%}
-        <article class="content">
-            {{ content }}
-        </article>
-{%- if page.date or page.source -%}
-        <footer class="post-meta">
-    {%- if page.date -%}
-            <time datetime="{{ page.date | date_to_xmlschema }}">{{ post.date | date: {{ site.date_format }} }}</time>
-    {%- endif -%}
-    {%- if page.source -%}
-        {%- if page.source contains "github.com" -%}
-            <span>首发于 <a href="{{ page.source }}">GitHub</a></span>
-        {%- elif page.source contains "zhihu.com" -%}
-            <span>首发于<a href="{{ page.source }}">知乎</a></span>
-        {%- elif page.source contains "bilibili.com" -%}
-            <span>首发于<a href="{{ page.source }}">哔哩哔哩</a></span>
-        {%- elif page.source contains "weibo.com" -%}
-            <span>首发于<a href="{{ page.source }}">微博</a></span>
-        {%- elif page.source contains "weixin.qq.com" -%}
-            <span>首发于<a href="{{ page.source }}">微信公众号</a></span>
-        {%- else -%}
-            <span>首发于 <a href="{{ page.source }}">{{ page.source }}</a></span>
-        {%- endif -%}
-    {%- endif -%}
-        </footer>
-{%- endif -%}
-    </main>
+    {{ content }}
 </body>
 </html>
