@@ -1,0 +1,103 @@
+:root {
+    font: 16px/1.5 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+/* Light theme */
+:root {
+    --text-color: #334;
+    --background-color: #fff;
+    --on-dark-text-color: #fff;
+    --dark-accent-background-color: #834;
+    --border-color: #ccd;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {:root {
+    --text-color: #fff;
+    --background-color: #223;
+    --on-dark-text-color: #fff;
+    --dark-accent-background-color: #834;
+    --border-color: #668;
+}}
+
+html {
+    background: linear-gradient(to right, var(--dark-accent-background-color), var(--dark-accent-background-color) 25rem, var(--background-color) 25rem);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.site-nav {
+    position: fixed;
+    left: 5rem;
+    bottom: 30%;
+    color: var(--on-dark-text-color);
+}
+
+.site-nav-list {
+    font-size: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.site-nav-list > li:nth-child(n + 2) {
+    margin-top: 1rem;
+}
+
+.site-nav-list a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.link-nav {
+    position: fixed;
+    left: 5rem;
+    top: calc(70% + 3rem);
+    color: var(--on-dark-text-color);
+}
+
+.link-nav-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.link-nav-list > li {
+    display: inline;
+}
+
+.link-nav-list a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.content-container {
+    margin-left: max(calc(50% - 21rem), 25rem);
+    padding: 2rem 3rem;
+    width: 42rem;
+}
+
+.site-badge {
+    display: inline-block;
+    padding-bottom: 0.25em;
+    padding-right: 0.5em;
+    border-bottom: solid 1px var(--border-color);
+}
+
+.home-hello {
+    position: fixed;
+    bottom: 30%;
+    margin: 0;
+    line-height: 0.9;
+    font-size: 128px;
+    /* font-style: italic; */
+}
+
+.content {
+    margin: 2rem 0;
+}
