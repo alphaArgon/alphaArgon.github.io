@@ -5,4 +5,5 @@ permalink:    "/:slug/"
 
 lang:         "zh"
 date_format:  "%Y/%m/%d"
-theme:        "red"
+
+# theme:        "red"
