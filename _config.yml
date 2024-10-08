@@ -1,7 +1,7 @@
 title:        "://argon.red"
 url:          "https://argon.red"
 baseurl:      ""
-permalink:    "/:slug/"
+permalink:    "/:slug"
 
 lang:         "zh"
 date_format:  "%Y/%m/%d"

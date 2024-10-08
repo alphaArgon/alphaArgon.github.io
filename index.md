@@ -1,1 +1,5 @@
-<p class="home-hello">hello.</p>
+---
+layout: default
+---
+
+<h1 class="home-hello">hello.</h1>
