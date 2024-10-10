@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ page.lang | default: site.lang }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}" />
-    <title>
-        {{ page.title | default: site.title }}
-    </title>
+    <meta name="color-scheme" content="light dark">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}"/>
+    <script src="{{ '/assets/style.js' | relative_url }}"></script>
+    <title>{{ page.title | default: site.title }}</title>
 </head>
-<body>
-    <nav class="site-nav" lang="en">
+{%- capture site_badge -%}
+    {%- case page.url -%}
+    {%- when "/", "/index", "/index.html" -%}
+        <span class="site-badge" role="complementary">{{ site.title }}</span>
+    {%- else -%}
+        {%- assign components = page.url | split: '/' -%}
+        {%- assign sliceLength = components | size | minus: 1 -%}
+        {%- assign updir = components | slice: 0, sliceLength | join: '/' -%}
+        <a class="site-badge" href="{{ updir | relative_url }}" role="complementary" rel="up">{{ site.title }}</a>
+    {%- endcase -%}
+{%- endcapture -%}
+<body ontouchstart>
+        <nav class="site-nav" lang="en">
+        {{ site_badge }}
         <ul class="site-nav-list">
             <li><a href="{{ '/' | relative_url }}">Home</a></li>
             <li><a href="{{ '/about' | relative_url }}">About</a></li>
@@ -18,48 +30,53 @@
     </nav>
     <nav class="link-nav" lang="en">
         <ul class="link-nav-list">
-            <li><a href="https://github.com/alphaArgon"><i class="icon-github"></i><span class="visually-hidden">GitHub</span></a></li>
-            <li><a href="https://twitter.com/alpha_argon"><i class="icon-twitter"></i><span class="visually-hidden">Twitter</span></a></li>
+            <li><a href="https://github.com/alphaArgon" target="_blank"><i class="icon-github"></i><span class="visually-hidden">GitHub</span></a></li>
+            <li><a href="https://twitter.com/alpha_argon" target="_blank"><i class="icon-twitter"></i><span class="visually-hidden">Twitter</span></a></li>
         </ul>
     </nav>
-    <main class="content-container" lang="{{ page.lang | default: site.lang }}">
-{%- unless page.suppress_header -%}
-        <header role="banner" class="site-badge">
-            <span>://argon.red</span>
-    {%- if page.cover -%}
-            <img src="{{ page.cover | relative_url }}" class="header-banner-image">
-    {%- endif -%}
-        </header>
-{%- endunless -%}
-{%- if page.title -%}
-        <h1 class="content-title">
-            {{ page.title }}
-        </h1>
+    <main class="main">
+{%- if page.cover -%}
+        <img class="page-banner-image" src="{{ page.cover | relative_url }}" role="banner">
 {%- endif -%}
-        <article class="content">
-            {{ content }}
-        </article>
-{%- if page.date or page.source -%}
-        <footer class="post-meta">
-    {%- if page.date -%}
-            <time datetime="{{ page.date | date_to_xmlschema }}">{{ post.date | date: {{ site.date_format }} }}</time>
+        {{ site_badge }}
+        <article class="page-content">
+{%- if page.title or page.date or page.source -%}
+            <header class="page-header">
+    {%- if page.title -%}
+                <h1 class="page-title">{{ page.title }}</h1>
     {%- endif -%}
-    {%- if page.source -%}
-        {%- if page.source contains "github.com" -%}
-            <span>首发于 <a href="{{ page.source }}">GitHub</a></span>
-        {%- elif page.source contains "zhihu.com" -%}
-            <span>首发于<a href="{{ page.source }}">知乎</a></span>
-        {%- elif page.source contains "bilibili.com" -%}
-            <span>首发于<a href="{{ page.source }}">哔哩哔哩</a></span>
-        {%- elif page.source contains "weibo.com" -%}
-            <span>首发于<a href="{{ page.source }}">微博</a></span>
-        {%- elif page.source contains "weixin.qq.com" -%}
-            <span>首发于<a href="{{ page.source }}">微信公众号</a></span>
-        {%- else -%}
-            <span>首发于 <a href="{{ page.source }}">{{ page.source }}</a></span>
+    {%- if page.date or page.source -%}
+                <div class="page-meta">
+        {%- if page.date -%}
+                    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: site.date_format }}</time>
         {%- endif -%}
+        {%- if page.source -%}
+            {%- if page.source contains "github.com" -%}
+                    <span>发布于 <a href="{{ page.source }}">GitHub</a></span>
+            {%- elsif page.source contains "zhihu.com" -%}
+                    <span>发布于<a href="{{ page.source }}">知乎</a></span>
+            {%- elsif page.source contains "bilibili.com" -%}
+                    <span>发布于<a href="{{ page.source }}">哔哩哔哩</a></span>
+            {%- elsif page.source contains "weibo.com" -%}
+                    <span>发布于<a href="{{ page.source }}">微博</a></span>
+            {%- elsif page.source contains "weixin.qq.com" -%}
+                    <span>发布于<a href="{{ page.source }}">微信公众号</a></span>
+            {%- else -%}
+                    <span>发布于 <a href="{{ page.source }}">{{ page.source }}</a></span>
+            {%- endif -%}
+        {%- endif -%}
+                </div>
     {%- endif -%}
-        </footer>
+            </header>
+{%- endif -%}
+            <div class="page-body">
+                {{ content }}
+            </div>
+        </article>
+{%- if page.copyright -%}
+        <div class="copyright caption">{{ page.copyright }}</div>
+{%- elsif page.date -%}
+        <div class="copyright caption">&copy; {{ page.date | date: "%Y" }} {{ site.title | upcase }}</div>
 {%- endif -%}
     </main>
 </body>

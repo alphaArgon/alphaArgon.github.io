@@ -1,9 +1,28 @@
-title:        "://argon.red"
-url:          "https://argon.red"
-baseurl:      ""
-permalink:    "/:slug"
+{
+    "title":        "://argon.red",
+    "url":          "https://argon.red",
+    "baseurl":      "/",
+    "permalink":    "/posts/:slug",
 
-lang:         "zh"
-date_format:  "%Y/%m/%d"
+    "lang":         "zh",
+    "encoding":     "utf-8",
+    "timezone":     "Asia/Shanghai",
+    "date_format":  "%Y/%m/%d",
 
-# theme:        "red"
+    "defaults": [{
+        "scope":    { "path": "" },
+        "values":   { "layout": "default" }
+    }],
+
+    "sass": {
+        "style":    "compressed"
+    },
+
+    "include":      [ "_pages" ],
+
+    "markdown":     "GFM",
+
+    "kramdown": {  #  In case of using Kramdown.
+        "smart_quotes": [ "apos", "apos", "quot", "quot" ]  #  This is annoying for a typographer.
+    }
+}
