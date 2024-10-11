@@ -1,8 +1,11 @@
 ---
 ---
 
-/* Light theme */
 :root {
+    --on-dark-text-color: #fff;
+    --dark-accent-background-color: #834;
+
+    /* Light theme */
     --text-color: #2d2e35;
     --dimmed-text-color: #505159;
     --secondary-text-color: #707279;
@@ -10,8 +13,6 @@
     --link-text-color: #104ed8;
     --background-color: #fff;
     --secondary-background-color: #f2f2f4;
-    --on-dark-text-color: #fff;
-    --dark-accent-background-color: #834;
     --border-color: #c9c9cd;
     --sh-keyword-color: #bb3355;
     --sh-key-type-color: #7726bb;
@@ -32,8 +33,6 @@
     --link-text-color: #00afff;
     --background-color: #191a1f;
     --secondary-background-color: #23242a;
-    --on-dark-text-color: #fff;
-    --dark-accent-background-color: #834;
     --border-color: #505159;
     --sh-keyword-color: #ff7788;
     --sh-key-type-color: #eebbff;
@@ -63,6 +62,34 @@ body {
 p, ul, ol, blockquote, figure, pre, table {
     margin: 1.25em 0;
     padding: 0;
+}
+
+hr {
+    border: none;
+    border-top: solid 1px var(--border-color);
+    margin: 2.5em auto;
+    width: 50%;
+}
+
+.small, .footnotes {
+    p, ul, ol, blockquote, figure, pre, table {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+
+    hr {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+}
+
+sup, sup, small, .small, .footnotes {
+    font-size: 81.25%;
+}
+
+figcaption, th, .caption, .page-meta, .post-entry-meta {
+    font-size: 81.25%;
+    color: var(--secondary-text-color);
 }
 
 h1 {
@@ -110,7 +137,6 @@ ul ul {list-style-type: disc;}
 ul ul ul {list-style-type: circle;}
 
 ul > li::marker {
-    font-family: "Verdana";
     font-weight: bold;
 }
 
@@ -135,7 +161,7 @@ blockquote::before {
 }
 
 pre, code {
-    /* Monospace font looks larger */
+    /*  Monospace font looks larger  */
     font-size: 87.5%;
     line-height: 1.5714285714;
 }
@@ -147,33 +173,31 @@ pre code {
     padding: 0;
     background-color: transparent;
     overflow: visible;
+    white-space: pre;
 }
 
 pre {
     padding: 0.8571428571em 1.1428571429em;
     background-color: var(--secondary-background-color);
     overflow: auto;
+    white-space: pre;
 }
 
 code {
     padding: 0.2em 0.4em;
     background-color: var(--secondary-background-color);
-}
+    white-space: pre-wrap;
+    white-space: break-spaces;
 
-small, .small {
-    font-size: 81.25%;
-}
-
-figcaption, th, .caption, .page-meta, .post-entry-meta {
-    font-size: 81.25%;
-    color: var(--secondary-text-color);
-}
-
-hr {
-    border: none;
-    border-top: solid 1px var(--border-color);
-    margin: 2.5em auto;
-    width: 50%;
+    /*  Allows breaking inside words  */
+    -webkit-locale: "en";
+    -webkit-hyphens: auto;
+    -webkit-hyphenate-character: "";
+    -webkit-hyphenate-limit-after: 4;
+    -webkit-hyphenate-limit-before: 4;
+    hyphens: auto;
+    hyphenate-character: "";
+    hyphenate-limit-chars: auto 4 4;
 }
 
 table {
@@ -196,11 +220,7 @@ td {
 }
 
 :any-link, u, .underline {
-    background-image: linear-gradient(var(--underline-color), var(--underline-color));
-    background-repeat: no-repeat;
-    background-size: calc(100% - 2px) 1px;
-    background-position: 1px 100%;
-    padding-bottom: 1px;
+    box-shadow: var(--underline-color) 0 2px 0 -1px;
     text-decoration: none;
 }
 
@@ -217,7 +237,7 @@ a:any-link:hover:active {
 /*  Chrome  */
 
 html {
-    --sidebar-width: max(25vw, 280px);  /*  Will be refined by JavaScript.  */
+    --sidebar-width: max(24vw, 280px);  /*  Will be refined by JavaScript.  */
     background: linear-gradient(to right, var(--dark-accent-background-color), var(--dark-accent-background-color) var(--sidebar-width), var(--background-color) 0);
 }
 
@@ -246,8 +266,7 @@ html {
 .site-nav a,
 .link-nav a {
     display: inline-block;
-    padding: 0;
-    background: none;
+    box-shadow: none;
     color: inherit;
 }
 
@@ -271,7 +290,7 @@ html {
 
 .icon-github,
 .icon-twitter {
-    display: inline-block;;
+    display: inline-block;
     vertical-align: -15%;
     width: 20px;
     height: 20px;
@@ -302,7 +321,7 @@ html {
     padding-right: max(3rem, env(safe-area-inset-right));
     padding-bottom: max(2rem, env(safe-area-inset-bottom));
     margin-left: max(calc(50% - 21rem), var(--sidebar-width));  /*  Will be refined by JavaScript.  */
-    max-width: 42rem;  /*  Will be refined by JavaScript.  */
+    max-width: 40rem;  /*  Will be refined by JavaScript.  */
 }
 
 /*  Page Content  */
@@ -312,7 +331,7 @@ html {
     padding-bottom: 0.25em;
     padding-right: 0.5em;
     border-bottom: solid 1px var(--border-color);
-    background: none;
+    box-shadow: none;
     color: inherit;
 }
 
@@ -382,9 +401,8 @@ html {
 
 .post-list-item > a {
     display: block;
+    box-shadow: none;
     color: inherit;
-    background: none;
-    padding: 0;
 }
 
 .post-entry {
@@ -416,11 +434,57 @@ html {
 .post-entry-excerpt {
     display: block;
     margin: 0.5em 0;
+}
 
-    p, ul, ol, blockquote, figure, pre, table {
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
-    }
+/*  Notes  */
+
+.footnotes {
+    margin-top: 4em;  /*  Same as .page-content  */
+    margin-bottom: -3em;
+}
+
+.footnotes::before {
+    content: "";
+    display: block;
+    width: 25%;
+    border-top: solid 1px var(--border-color);
+    margin-bottom: 1em;
+}
+
+.footnotes.all-sidenotes {
+    margin: 0;
+}
+
+.footnotes.all-sidenotes::before {
+    display: none;
+}
+
+.footnotes.all-sidenotes > ol {
+    margin: 0;
+}
+
+.footnote-ref {
+    vertical-align: baseline;
+}
+
+.footnote-ref > a,
+a.footnote-backref {
+    box-shadow: none;
+    color: var(--accent-text-color);
+}
+
+.footnote-ref > a {
+    display: inline-block;
+    vertical-align: super;
+    margin: -0.5em 0;
+}
+
+.sidenote {
+    margin: 0;
+}
+
+.sidenote > :first-child {
+    margin-top: 0;
 }
 
 /*  Compact Layout  */
@@ -514,6 +578,14 @@ html {
     .page-banner-image {
         display: block;
         margin-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 0 1.5rem;
+        padding-left: max(1.5rem, env(safe-area-inset-left));
+        padding-right: max(1.5rem, env(safe-area-inset-right));
     }
 }
 

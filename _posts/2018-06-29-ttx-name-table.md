@@ -268,22 +268,23 @@ nameID 为 1 和 2 的内容分别为意识上的家族名和子族名，例如�
 
 ## Windows 惯例
 
-1\. 如果它的子族为四大基本样式（标准、斜体、粗体、粗斜体），nameID 为 1 和 2 的内容也为意识上的家族名和子族名，并且不需要首选家族名和首选子族名。
-对于其他的子族，例如 SampleFont Condensed Semibold Italic，它的这两个应该为
+1.  如果它的子族为四大基本样式（标准、斜体、粗体、粗斜体），nameID 为 1 和 2 的内容也为意识上的家族名和子族名，并且不需要首选家族名和首选子族名。
 
-```
-家族名：SampleFont Condensed Semibold
-子族名：Italic
-```
+    对于其他的子族，例如 SampleFont Condensed Semibold Italic，它的这两个应该为
 
-2\. 如果字族相同，Windows 最多只能识别子族名为 Regular, Italic, Bold, Bold Italic 的四个字型档。另一种写法可以是
+    ```
+    家族名：SampleFont Condensed Semibold
+    子族名：Italic
+    ```
 
-```
-家族名：SampleFont Condensed Semibold
-子族名：Condensed Semibold Italic
-```
+2.  如果字族相同，Windows 最多只能识别子族名为 Regular, Italic, Bold, Bold Italic 的四个字型档。另一种写法可以是
 
-但并不推荐。若要能在控制面板的「字体」中正确归为字族，则应添加首选家族名和首选子族名。这两者的写法同 macOS 的家族名和子族名。
+    ```
+    家族名：SampleFont Condensed Semibold
+    子族名：Condensed Semibold Italic
+    ```
+
+    但并不推荐。若要能在控制面板的「字体」中正确归为字族，则应添加首选家族名和首选子族名。这两者的写法同 macOS 的家族名和子族名。
 
 ## 结尾
 
