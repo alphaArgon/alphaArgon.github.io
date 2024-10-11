@@ -47,7 +47,7 @@
 {%- if page.title or page.date or page.source -%}
             <header class="page-header">
     {%- if page.title -%}
-                <h1 class="page-title">{{ page.title }}</h1>
+                <h1 id="page-title" class="page-title">{{ page.title }}</h1>
     {%- endif -%}
     {%- if page.date or page.source -%}
                 <div class="page-meta">
@@ -55,19 +55,24 @@
                     <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: site.date_format }}</time>
         {%- endif -%}
         {%- if page.source -%}
-            {%- if page.source contains "github.com" -%}
-                    <span>发布于 <a href="{{ page.source }}">GitHub</a></span>
-            {%- elsif page.source contains "zhihu.com" -%}
-                    <span>发布于<a href="{{ page.source }}">知乎</a></span>
-            {%- elsif page.source contains "bilibili.com" -%}
-                    <span>发布于<a href="{{ page.source }}">哔哩哔哩</a></span>
-            {%- elsif page.source contains "weibo.com" -%}
-                    <span>发布于<a href="{{ page.source }}">微博</a></span>
-            {%- elsif page.source contains "weixin.qq.com" -%}
-                    <span>发布于<a href="{{ page.source }}">微信公众号</a></span>
-            {%- else -%}
-                    <span>发布于 <a href="{{ page.source }}">{{ page.source }}</a></span>
+            {%- assign short_name = page.source | split: "//" | last | split: "/" | first -%}
+            {%- if short_name | slice: 0, 4 == "www." -%}
+                {%- assign short_name = short_name | slice: 4, short_name | size ｜ minus: 4 -%}
             {%- endif -%}
+            {%- if short_name contains "github.com" -%}
+                {%- assign short_name = " GitHub" -%}
+            {%- elsif short_name contains "zhihu.com" -%}
+                {%- assign short_name = "知乎" -%}
+            {%- elsif short_name contains "bilibili.com" -%}
+                {%- assign short_name = "哔哩哔哩" -%}
+            {%- elsif short_name contains "weibo.com" -%}
+                {%- assign short_name = "微博" -%}
+            {%- elsif short_name contains "weixin.qq.com" -%}
+                {%- assign short_name = "微信公众号" -%}
+            {%- else -%}
+                {%- assign short_name = short_name | prepend: " " -%}
+            {%- endif -%}
+                    <span>最初发布于<a href="{{ page.source }}" target="_blank" rel="noopener noreferrer">{{ short_name }}</a></span>
         {%- endif -%}
                 </div>
     {%- endif -%}

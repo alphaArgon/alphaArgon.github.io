@@ -1,9 +1,10 @@
 ---
 title: ttx 和 SFNT 字体 'name' 表
 source: https://zhuanlan.zhihu.com/p/38679788
-excerpt: 使用 ttx 提取字体文件的 'name' 表，并简介其内容。简单讨论 macOS 和 Windows 下 'name' 表惯例的区别。
+excerpt: 使用 ttx 提取字体文件的 'name' 表，并简介其内容。讨论 macOS 和 Windows 下 'name' 表惯例的区别。
 ---
 
+<!-- FIXME: Mac Safari 17.6 won’t show whole page on Reader View -->
 
 一般来说，SFNT 字体由多张表 (tables) 描述，如负责字体名称的 'name' 表，字形曲线的 'CFF ' (PS) 和 'glyf' (TT) 表等。ttx 隶属于开源项目 [fontTools](https://github.com/fonttools/fonttools)，亦被收录于 [Adobe Font Development Kit for OpenType](https://www.adobe.com/devnet/opentype/afdko.html) (AFDKO, FDK)，用以提取字体的信息表。
 

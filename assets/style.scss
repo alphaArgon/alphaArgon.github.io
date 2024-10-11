@@ -320,7 +320,7 @@ html {
     padding-top: max(2rem, env(safe-area-inset-top));
     padding-right: max(3rem, env(safe-area-inset-right));
     padding-bottom: max(2rem, env(safe-area-inset-bottom));
-    margin-left: max(calc(50% - 21rem), var(--sidebar-width));  /*  Will be refined by JavaScript.  */
+    margin-left: max(calc(50% - 20rem), var(--sidebar-width));  /*  Will be refined by JavaScript.  */
     max-width: 40rem;  /*  Will be refined by JavaScript.  */
 }
 
@@ -332,7 +332,7 @@ html {
     padding-right: 0.5em;
     border-bottom: solid 1px var(--border-color);
     box-shadow: none;
-    color: inherit;
+    color: var(--dimmed-text-color);
 }
 
 .page-content {
@@ -344,7 +344,7 @@ html {
     bottom: 30%;
     margin: 0;
     padding-right: 0.5em;
-    line-height: 0.9;
+    line-height: 1;
     font-size: 128px;
     /* font-style: italic; */
 }
@@ -558,7 +558,7 @@ a.footnote-backref {
     }
 
     .home-hello {
-        font-size: calc(6.25vw + 64px);
+        font-size: calc(10vw + 32px);
     }
 
     .main {
@@ -586,6 +586,17 @@ a.footnote-backref {
         padding: 0 1.5rem;
         padding-left: max(1.5rem, env(safe-area-inset-left));
         padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+
+    .post-entry.has-image {    
+        padding-right: 0;
+    }
+    
+    .post-entry-image {
+        position: static;
+        width: 100%;
+        max-height: 8em;
+        margin-bottom: 0.25em;
     }
 }
 
