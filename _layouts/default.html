@@ -15,8 +15,8 @@
         <span class="site-badge" role="complementary">{{ site.title }}</span>
     {%- else -%}
         {%- assign components = page.url | split: '/' -%}
-        {%- assign sliceLength = components | size | minus: 1 -%}
-        {%- assign updir = components | slice: 0, sliceLength | join: '/' -%}
+        {%- assign slice_length = components | size | minus: 1 -%}
+        {%- assign updir = components | slice: 0, slice_length | join: '/' -%}
         {%- if updir == "" -%}
             {%- assign updir = "/" -%}
         {%- endif -%}
@@ -56,8 +56,10 @@
         {%- endif -%}
         {%- if page.source -%}
             {%- assign short_name = page.source | split: "//" | last | split: "/" | first -%}
-            {%- if short_name | slice: 0, 4 == "www." -%}
-                {%- assign short_name = short_name | slice: 4, short_name | size ｜ minus: 4 -%}
+            {%- assign first_four = short_name | slice: 0, 4 -%}
+            {%- if first_four == "www." -%}
+                {%- assign slice_length = short_name | size | minus: 4 -%}
+                {%- assign short_name = short_name | slice: 4, slice_length -%}
             {%- endif -%}
             {%- if short_name contains "github.com" -%}
                 {%- assign short_name = " GitHub" -%}
