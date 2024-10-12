@@ -1,6 +1,32 @@
 ---
 ---
 
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@360&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@700&display=swap');
+
+@font-face {
+    /*  The space of Merriweather Sans is too narrow  */
+    font-family: "Merriweather Sans";
+    src: local("Trebuchet MS");
+    font-weight: 360;
+    unicode-range: U+0020;
+}
+
+@font-face {
+    /*  The space of Merriweather Sans is too narrow  */
+    font-family: "Merriweather Sans";
+    src: local("Trebuchet MS");
+    font-weight: 700;
+    unicode-range: U+0020;
+}
+
+@font-face {
+    /*  A font to control the line height and display bullet hyphens  */
+    font-family: leading;
+    font-weight: bold;
+    src: local("Arial") unicode-range("U+0020"), url("data:font/sfnt;base64,AAEAAAAKAIAAAwAgT1MvMoDkcdoAAAEoAAAAVmNtYXAADCB2AAABiAAAACxnbHlmHB6YKwAAAbwAAAAaaGVhZCp184EAAACsAAAANmhoZWEMQgQDAAAA5AAAACRobXR4BwAAgAAAAYAAAAAIbG9jYQANAAAAAAG0AAAABm1heHACDgAFAAABCAAAACBuYW1lAzMXXwAAAdgAAABecG9zdP8BAIAAAAI4AAAAIAABAAAAAQAA52woe18PPPUAAwgAAAAAAOMvzOgAAAAA4y/cXgCAAkAEgAMAAAAABgACAAAAAAAAAAEAAAdA/oAAAAUAAIAAgASAAAEAAAAAAAAAAAAAAAAAAAACAAEAAAACAAQAAQAAAAAAAQAAAAAACgAAAgAAAAAAAAAAAQIAAZAABQAABAAEAAAAAQAEAAQAAAADAACAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQVJHTgAAIEMgQwdA/oAAAAdAAYAAAAABAAAAAAAAAgAAAAUAAIAAAAABAAMAAQAAAAwABAAgAAAABAAEAAEAACBD//8AACBD///fvgABAAAAAAAAAAAADQAAAAEAgAJABIADAAADAAATIRUhgAQA/AADAMAAAAAAAAUAQgADAAEECQABAA4AAAADAAEECQACAA4ADgADAAEECQADAA4AAAADAAEECQAEAA4AAAADAAEECQAGAA4AAABsAGUAYQBkAGkAbgBnAFIAZQBnAHUAbABhAHIAAAABAAAAAAAA/wAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+}
+
 :root {
     --on-dark-text-color: #fff;
     --dark-accent-background-color: #834;
@@ -46,7 +72,7 @@
 
 :root {
     --underline-color: currentColor;
-    font: 16px/1.75 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, sans-serif;
+    font: 16px/1.75 leading, "Lucida Grande", "Lucida Sans", "Merriweather Sans", "Segoe UI", Verdana, sans-serif;
     color: var(--text-color);
     word-break: break-word;
     -webkit-tap-highlight-color: transparent;
@@ -132,13 +158,9 @@ li, ul ul, ol ol, ul ol, ol ul {
     margin-bottom: 0.25em;
 }
 
-ul {list-style-type: "\2012\20\20";}
+ul {list-style-type: "\2043\20\20";}
 ul ul {list-style-type: disc;}
 ul ul ul {list-style-type: circle;}
-
-ul > li::marker {
-    font-weight: bold;
-}
 
 ::marker {
     color: var(--accent-text-color);
@@ -578,6 +600,12 @@ a.footnote-backref {
     .page-banner-image {
         display: block;
         margin-top: 0;
+    }
+
+    .copyright.caption {
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
