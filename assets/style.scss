@@ -201,7 +201,9 @@ pre code {
 pre {
     padding: 0.8571428571em 1.1428571429em;
     background-color: var(--secondary-background-color);
-    overflow: auto;
+    overflow: auto;  /* ???: When scrollbars are visible, font subpixel antialiasing of the whole
+                             page is disabled on Blink for Windows. This issue is filed at:
+                                 https://issues.chromium.org/issues/372873705  */
     white-space: pre;
 }
 

@@ -47,7 +47,7 @@
             let top = backtarget.offsetTop;
             return {li, top};
         });
-        
+
         let allSidenotes = true;
         let lastBottom = 0;
         for (let {li, top} of liTops) {
@@ -72,16 +72,19 @@
     function sizeContent(args) {
         let main = document.querySelector(".main");
         if (main === null) {return;}
-        
+
+        let siteBadge = main.querySelector(".site-badge");
+        if (siteBadge === null) {return;}
+
         let banner = document.querySelector(".page-banner-image");
         let root = document.documentElement;
         let rootStyle = getComputedStyle(root);
         let mainStyle = getComputedStyle(main);
+        let siteBadgeStyle = getComputedStyle(siteBadge);
 
         let prevViewportWidth = NaN;
         let times = ("ResizeObserverEntry" in window && args instanceof ResizeObserverEntry) ? 1 : 2;
         for (let i = 0; i < times; i++) {
-            let compactWidth = 960;
             let viewportWidth = root.clientWidth;
             if (prevViewportWidth === viewportWidth) {break;}
 
@@ -95,7 +98,13 @@
             let bannerExtension = 0;
             let bannerWidth = 0;
 
-            if (viewportWidth > compactWidth) {
+            //  The `display` property of the site badge is controlled by CSS media queries.
+            //  The defination of `max-width` may not be based on the viewport width. For example,
+            //  Safari is not consistent with Chrome and Firefox in the calculation of `max-width`.
+            //  Therefore, We should not rely on `viewportWidth` to determine the layout.
+            let isCompactLayout = siteBadgeStyle.display === "none";
+
+            if (!isCompactLayout) {
                 let sidebarWidth = Math.max(280, Math.floor(viewportWidth * 0.24));
                 root.style.setProperty("--sidebar-width", sidebarWidth + "px");
 
