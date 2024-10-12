@@ -94,9 +94,9 @@ ttx -t 'name' -t 'glyf'
 
 第 5 行到第 7 行、第 8 行到第 10 行标记了一条名称记录（name record，权且这样翻译）。
 
-第 6 行和第 9 行为该名称纪录的内容。
+第 6 行和第 9 行为该名称记录的内容。
 
-第 5 行和第 7 行标记了这条名称纪录的
+第 5 行和第 7 行标记了这条名称记录的
 
 - 名称识别符, name identifier code, nameID
 - 平台识别符, platform identifier code, platformID
@@ -115,7 +115,7 @@ ttx -t 'name' -t 'glyf'
 > 3　Windows 平台\
 > 4　自定义平台
 
-大多数情况 platformID 只会使用 1 和 3，在这种情况下 macOS 下优先识别 ID 为 1 的纪录，其次是 ID 为 3。Windows 只识别 ID 为 3 的纪录。故一些情况下可以省略 ID 为 0 的名称纪录。
+大多数情况 platformID 只会使用 1 和 3，在这种情况下 macOS 下优先识别 ID 为 1 的记录，其次是 ID 为 3。Windows 只识别 ID 为 3 的记录。故一些情况下可以省略 ID 为 0 的名称记录。
 
 ## 平台详明识别符
 
@@ -126,7 +126,7 @@ ttx -t 'name' -t 'glyf'
 > 2　ISO 10646 1993 semantics，目前已弃用\
 > 3　Unicode 2.0 或后续 semantics，仅限基本文平面（U+0000–U+FFFF）\
 > 4　Unicode 2.0 或后续 semantics，不限制编码平面\
-> 5　Unicode 变体序列。仅在 'cmap' 中被使用，但本文顺带說明
+> 5　Unicode 变体序列。仅在 'cmap' 中被使用，但本文顺带说明
 
 出于历史原因，部分字符（主要是谚文相关）编码在 Unicode 迭代中被移动。
 
@@ -212,7 +212,7 @@ ttx -t 'name' -t 'glyf'
 
 ## 名称标识符
 
-用以标记这条纪录的内容是字体的家族、子族、版权等。nameID 可以为 0 到 327670。一般的字型档只包括 nameID 为 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17。
+用以标记这条记录的内容是字体的家族、子族、版权等。nameID 可以为 0 到 327670。一般的字型档只包括 nameID 为 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17。
 
 0 到 25 的 nameID 已经被预定义，分别为
 
@@ -241,7 +241,7 @@ ttx -t 'name' -t 'glyf'
 > 22　WWS 子族名\
 > 23　浅色调色板\
 > 24　深色调色板\
-> 25　可变字体的首位名称纪录 nameID\
+> 25　可变字体的首位名称记录 nameID\
 > 26 到 255 为以后 OpenType 规范保留\
 > 256 到 2767 用于描述可变字体的子样式名、OpenType 特性，如样式集名称
 
@@ -251,7 +251,7 @@ ttx -t 'name' -t 'glyf'
 
 ## macOS 惯例
 
-nameID 为 1 和 2 的内容分别为意识上的家族名和子族名，例如有字体叫 SampleFont Condensed Semibold Italic，它这两项应为
+nameID 为 1 和 2 的内容分别为概念上的家族名和子族名，例如有字体叫 SampleFont Condensed Semibold Italic，它这两项应为
 
 ```
 家族名：SampleFont Condensed
