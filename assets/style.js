@@ -159,7 +159,7 @@ const nextTickDo = (function () {
                 if (backTarget !== null) {
                     //  Reflow should be triggered at most once.
                     //  `.all-sidenotes` is positioned absolutely, and won’t affect the main content.
-                    top = Math.max(top, backTarget.offsetTop);
+                    top = Math.max(top, backTarget.getBoundingClientRect().top + window.scrollY);
                 }
             }
 

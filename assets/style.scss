@@ -364,6 +364,8 @@ html {
 
 .page-content {
     margin: 2rem 0 4rem;
+    -webkit-hyphens: auto;
+    hyphens: auto;
 }
 
 .home-hello {
@@ -473,14 +475,17 @@ html {
 .footnotes::before {
     content: "";
     display: block;
-    width: 25%;
+    width: 10em;
     border-top: solid 1px var(--border-color);
     margin-bottom: 1em;
 }
 
 .footnotes.all-sidenotes {
     position: absolute;
+    top: 0;
+    left: 0;
     margin: 0;
+    color: var(--dimmed-text-color);
 }
 
 .footnotes.all-sidenotes::before {
@@ -489,6 +494,7 @@ html {
 
 .footnotes.all-sidenotes > ol {
     margin: 0;
+    padding: 0;
 }
 
 .footnote-ref {
@@ -499,6 +505,10 @@ html {
 a.footnote-backref {
     box-shadow: none;
     color: var(--accent-text-color);
+}
+
+.footnotes.all-sidenotes .footnote-backref {
+    display: none;
 }
 
 .footnote-ref > a {
