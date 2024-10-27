@@ -528,6 +528,7 @@ a.footnote-backref {
     .site-nav.at-root .site-nav-link-posts::after {
         content: "";
         pointer-events: none;
+        position: absolute;
         display: inline-block;
         margin-left: 16px;
         height: 32px;
