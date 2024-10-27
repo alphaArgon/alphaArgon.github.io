@@ -7,11 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}"/>
     <script src="{{ '/assets/style.js' | relative_url }}"></script>
-    <title>{{ page.title | default: site.title }}</title>
+    <title>
+{%- if page.title -%}
+        {{ page.title | escape }} @ {{ site.title | escape }}
+{%- else -%}
+        {{ site.title | escape }}
+{%- endif -%}
+    </title>
 </head>
+{%- assign is_root_page = false -%}
 {%- capture site_badge -%}
     {%- case page.url -%}
     {%- when "/", "/index", "/index.html" -%}
+        {%- assign is_root_page = true -%}
         <span class="site-badge" role="complementary">{{ site.title }}</span>
     {%- else -%}
         {%- assign components = page.url | split: '/' -%}
@@ -24,12 +32,16 @@
     {%- endcase -%}
 {%- endcapture -%}
 <body ontouchstart>
-        <nav class="site-nav" lang="en">
+{% if is_root_page %}
+        <nav class="site-nav at-root">
+{% else %}
+        <nav class="site-nav">
+{% endif %}
         {{ site_badge }}
         <ul class="site-nav-list">
-            <li><a href="{{ '/' | relative_url }}">Home</a></li>
-            <li><a href="{{ '/about' | relative_url }}">About</a></li>
-            <li><a href="{{ '/posts' | relative_url }}">Posts</a></li>
+            <li><a class="site-nav-link-home" href="{{ '/' | relative_url }}">Home</a></li>
+            <li><a class="site-nav-link-about" href="{{ '/about' | relative_url }}">About</a></li>
+            <li><a class="site-nav-link-posts" href="{{ '/posts' | relative_url }}">Posts</a></li>
         </ul>
     </nav>
     <nav class="link-nav" lang="en">

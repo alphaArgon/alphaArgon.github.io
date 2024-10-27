@@ -1,6 +1,13 @@
 <figure class="figure">
 {%- if include.img -%}
+    {%- if include.imd -%}
+<picture>
+<source srcset="{{ include.imd | relative_url }}" media="(prefers-color-scheme: dark)">
+    {%- endif -%}
 <img src="{{ include.img | relative_url }}" class="figure-content"{% if include.width %} width="{{ include.width }}"{% endif %}>
+    {%- if include.imd -%}
+</picture>
+    {%- endif -%}
 {%- endif -%}
 {%- if include.caption -%}
 <figcaption class="figure-caption">{{ include.caption }}</figcaption>

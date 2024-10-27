@@ -1,8 +1,8 @@
 ---
 ---
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@350&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@350&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@700&display=swap");
 
 @font-face {
     /*  The space of Merriweather Sans is too narrow  */
@@ -185,6 +185,7 @@ blockquote::before {
 pre, code {
     /*  Monospace font looks larger  */
     font-size: 87.5%;
+    font-family: "Lucida Sans Typewriter", "Lucida Console", "Courier New", monospace;
     line-height: 1.5714285714;
 }
 
@@ -201,6 +202,8 @@ pre code {
 pre {
     padding: 0.8571428571em 1.1428571429em;
     background-color: var(--secondary-background-color);
+    word-break: normal;  /*  Not setting it may cause wrapping on Safari 13.  */
+    position: relative;  /*  A workaround for the following issue  */
     overflow: auto;  /* ???: When scrollbars are visible, font subpixel antialiasing of the whole
                              page is disabled on Blink for Windows. This issue is filed at:
                                  https://issues.chromium.org/issues/372873705  */
@@ -250,7 +253,8 @@ td {
 
 a:any-link {
     color: var(--link-text-color);
-    transition: opacity 0.2s 0.05s;
+    transition: opacity 0.2s 0.1s;  /*  This delay is helpful to, for example, when the user swipes
+                                        back from the target page, indicate where they tapped.  */
 }
 
 a:any-link:hover:active {
@@ -258,7 +262,7 @@ a:any-link:hover:active {
     transition: none;
 }
 
-/*  Chrome  */
+/*  Page Chrome  */
 
 html {
     --sidebar-width: max(24vw, 280px);  /*  Will be refined by JavaScript.  */
@@ -318,8 +322,7 @@ html {
     vertical-align: -15%;
     width: 20px;
     height: 20px;
-    background-size: cover;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 80 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M64.733 3.189a.982.982 0 1 1 1.363-1.414l2.121 2.047c.06.058.112.122.154.19h3.208a.99.99 0 0 1 .154-.19l2.12-2.047a.982.982 0 0 1 1.364 1.414l-.853.823H75a4 4 0 0 1 4 4v5.505a4 4 0 0 1-4 4H65a4 4 0 0 1-4-4V8.012a4 4 0 0 1 4-4h.586l-.853-.823zM65 5.94a2 2 0 0 0-2 2v5.647a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.94a2 2 0 0 0-2-2H65zm1 3.894a1 1 0 0 1 2 0v.894a1 1 0 1 1-2 0v-.894zm7-1a1 1 0 0 0-1 1v.894a1 1 0 1 0 2 0v-.894a1 1 0 0 0-1-1zM58 3.496h-7.208v12.499h1.766l.236 1.505 2.388-1.505H58V3.496zm-3.047 10.937l-1.402.883-.138-.882h-1.009V5.047h3.968v9.387h-1.42zM45.108 1.4s-.514 1.467-.675 1.947c-.016.045-.032.097-.049.149h4.665c.212 0 .416.083.567.232.15.147.235.349.236.56v.76h-2.988v3.218c-.003.295-.023.578-.023.853h2.621c.199-.001.39.077.532.217.14.138.22.328.218.526v.801H46.72a16.438 16.438 0 0 1-.655 3.06c-.35 1.12-1.078 2.596-1.89 3.352-1.343 1.246-3.175.558-3.175.558a19.372 19.372 0 0 0 1.841-1.742 9.829 9.829 0 0 0 1.763-3.086c.226-.693.379-1.41.455-2.135h-3.82c0-.412.166-.807.459-1.097.294-.29.692-.453 1.107-.453h2.411c.017-.28.043-.562.043-.855V5.047h-1.366l-.052.175c-.22.808-.548 1.34-1.202 1.687-.46.228-.963.35-1.475.357 0 0 .681-1.375.963-2.157.183-.49.455-1.311.767-2.161.268-.74.468-.905.802-1.14a2.494 2.494 0 0 1 1.412-.408zm2.487 10.928l1.825 2.67c.204.39.262.84.164 1.27a4.04 4.04 0 0 1-.394 1.297l-2.948-4.364 1.353-.873zM38.106 6.242c.011.163.011.326.011.491 0 5.015-3.818 10.8-10.8 10.8v-.004a10.745 10.745 0 0 1-5.817-1.701 7.621 7.621 0 0 0 5.617-1.573 3.8 3.8 0 0 1-3.546-2.636c.57.11 1.156.087 1.714-.065a3.796 3.796 0 0 1-3.045-3.72v-.049a3.771 3.771 0 0 0 1.723.475 3.8 3.8 0 0 1-1.175-5.068 10.773 10.773 0 0 0 7.823 3.966 3.798 3.798 0 0 1 6.468-3.462 7.616 7.616 0 0 0 2.41-.921 3.81 3.81 0 0 1-1.669 2.099A7.548 7.548 0 0 0 40 4.276a7.71 7.71 0 0 1-1.894 1.966zM10 1c-4.973 0-9 4.027-9 9a8.993 8.993 0 0 0 6.154 8.538c.45.08.618-.19.618-.427 0-.214-.011-.922-.011-1.676-2.261.416-2.846-.551-3.026-1.057-.101-.259-.54-1.058-.923-1.272-.315-.169-.765-.585-.011-.596.709-.011 1.215.653 1.384.923.81 1.361 2.104.978 2.621.742.079-.585.315-.979.574-1.204-2.003-.225-4.095-1.001-4.095-4.444 0-.978.349-1.788.922-2.418-.09-.225-.404-1.148.09-2.385 0 0 .754-.237 2.476.922a8.341 8.341 0 0 1 2.25-.303c.764 0 1.53.101 2.25.303 1.721-1.17 2.474-.922 2.474-.922.496 1.237.18 2.16.09 2.385.574.63.923 1.428.923 2.418 0 3.454-2.104 4.219-4.106 4.444.326.282.607.822.607 1.665 0 1.204-.011 2.171-.011 2.475 0 .236.169.518.618.428A9.014 9.014 0 0 0 19 10c0-4.973-4.027-9-9-9z' fill='%238F9097'/%3E%3C/svg%3E");
+    background: 0/cover url("data:image/svg+xml,%3Csvg viewBox='0 0 80 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M64.733 3.189a.982.982 0 1 1 1.363-1.414l2.121 2.047c.06.058.112.122.154.19h3.208a.99.99 0 0 1 .154-.19l2.12-2.047a.982.982 0 0 1 1.364 1.414l-.853.823H75a4 4 0 0 1 4 4v5.505a4 4 0 0 1-4 4H65a4 4 0 0 1-4-4V8.012a4 4 0 0 1 4-4h.586l-.853-.823zM65 5.94a2 2 0 0 0-2 2v5.647a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.94a2 2 0 0 0-2-2H65zm1 3.894a1 1 0 0 1 2 0v.894a1 1 0 1 1-2 0v-.894zm7-1a1 1 0 0 0-1 1v.894a1 1 0 1 0 2 0v-.894a1 1 0 0 0-1-1zM58 3.496h-7.208v12.499h1.766l.236 1.505 2.388-1.505H58V3.496zm-3.047 10.937l-1.402.883-.138-.882h-1.009V5.047h3.968v9.387h-1.42zM45.108 1.4s-.514 1.467-.675 1.947c-.016.045-.032.097-.049.149h4.665c.212 0 .416.083.567.232.15.147.235.349.236.56v.76h-2.988v3.218c-.003.295-.023.578-.023.853h2.621c.199-.001.39.077.532.217.14.138.22.328.218.526v.801H46.72a16.438 16.438 0 0 1-.655 3.06c-.35 1.12-1.078 2.596-1.89 3.352-1.343 1.246-3.175.558-3.175.558a19.372 19.372 0 0 0 1.841-1.742 9.829 9.829 0 0 0 1.763-3.086c.226-.693.379-1.41.455-2.135h-3.82c0-.412.166-.807.459-1.097.294-.29.692-.453 1.107-.453h2.411c.017-.28.043-.562.043-.855V5.047h-1.366l-.052.175c-.22.808-.548 1.34-1.202 1.687-.46.228-.963.35-1.475.357 0 0 .681-1.375.963-2.157.183-.49.455-1.311.767-2.161.268-.74.468-.905.802-1.14a2.494 2.494 0 0 1 1.412-.408zm2.487 10.928l1.825 2.67c.204.39.262.84.164 1.27a4.04 4.04 0 0 1-.394 1.297l-2.948-4.364 1.353-.873zM38.106 6.242c.011.163.011.326.011.491 0 5.015-3.818 10.8-10.8 10.8v-.004a10.745 10.745 0 0 1-5.817-1.701 7.621 7.621 0 0 0 5.617-1.573 3.8 3.8 0 0 1-3.546-2.636c.57.11 1.156.087 1.714-.065a3.796 3.796 0 0 1-3.045-3.72v-.049a3.771 3.771 0 0 0 1.723.475 3.8 3.8 0 0 1-1.175-5.068 10.773 10.773 0 0 0 7.823 3.966 3.798 3.798 0 0 1 6.468-3.462 7.616 7.616 0 0 0 2.41-.921 3.81 3.81 0 0 1-1.669 2.099A7.548 7.548 0 0 0 40 4.276a7.71 7.71 0 0 1-1.894 1.966zM10 1c-4.973 0-9 4.027-9 9a8.993 8.993 0 0 0 6.154 8.538c.45.08.618-.19.618-.427 0-.214-.011-.922-.011-1.676-2.261.416-2.846-.551-3.026-1.057-.101-.259-.54-1.058-.923-1.272-.315-.169-.765-.585-.011-.596.709-.011 1.215.653 1.384.923.81 1.361 2.104.978 2.621.742.079-.585.315-.979.574-1.204-2.003-.225-4.095-1.001-4.095-4.444 0-.978.349-1.788.922-2.418-.09-.225-.404-1.148.09-2.385 0 0 .754-.237 2.476.922a8.341 8.341 0 0 1 2.25-.303c.764 0 1.53.101 2.25.303 1.721-1.17 2.474-.922 2.474-.922.496 1.237.18 2.16.09 2.385.574.63.923 1.428.923 2.418 0 3.454-2.104 4.219-4.106 4.444.326.282.607.822.607 1.665 0 1.204-.011 2.171-.011 2.475 0 .236.169.518.618.428A9.014 9.014 0 0 0 19 10c0-4.973-4.027-9-9-9z' fill='%238F9097'/%3E%3C/svg%3E");
 }
 
 .icon-github {
@@ -460,7 +463,7 @@ html {
     margin: 0.5em 0;
 }
 
-/*  Notes  */
+/*  Footnotes  */
 
 .footnotes {
     margin-top: 4em;  /*  Same as .page-content  */
@@ -476,6 +479,7 @@ html {
 }
 
 .footnotes.all-sidenotes {
+    position: absolute;
     margin: 0;
 }
 
@@ -505,10 +509,68 @@ a.footnote-backref {
 
 .sidenote {
     margin: 0;
+    position: absolute;
 }
 
 .sidenote > :first-child {
     margin-top: 0;
+}
+
+/*  Animation  */
+
+@supports (transform: var(--transform-base)) {
+    .site-nav-link-about,
+    .site-nav-link-posts {
+        position: relative;
+    }
+
+    .site-nav.at-root .site-nav-link-about::after,
+    .site-nav.at-root .site-nav-link-posts::after {
+        content: "";
+        pointer-events: none;
+        display: inline-block;
+        margin-left: 16px;
+        height: 32px;
+        width: 32px;
+        background: 0/cover url("/assets/pointers.png");
+        animation: circular-path-small infinite 1s linear;
+        transform: var(--transform-base);
+        --transform-base: translateZ(0);
+    }
+
+    .site-nav.at-root .site-nav-link-about::after {
+        animation-delay: -0.5s;
+        --transform-base: rotate(-10deg) scale(0.9);
+    }
+
+    .site-nav.at-root .site-nav-link-posts::after {
+        background-position: 32px 0;
+        --transform-base: rotate(5deg) translate(0, 4px);    
+    }
+}
+
+@keyframes circular-path-small {
+    00% {transform: var(--transform-base) translate(0, 5px);}
+    05% {transform: var(--transform-base) translate(1.545084972px, 4.755282581px);}
+    10% {transform: var(--transform-base) translate(2.938926261px, 4.045084972px);}
+    15% {transform: var(--transform-base) translate(4.045084972px, 2.938926261px);}
+    20% {transform: var(--transform-base) translate(4.755282581px, 1.545084972px);}
+    25% {transform: var(--transform-base) translate(5px, 0);}
+    30% {transform: var(--transform-base) translate(4.755282581px, -1.545084972px);}
+    35% {transform: var(--transform-base) translate(4.045084972px, -2.938926261px);}
+    40% {transform: var(--transform-base) translate(2.938926261px, -4.045084972px);}
+    45% {transform: var(--transform-base) translate(1.545084972px, -4.755282581px);}
+    50% {transform: var(--transform-base) translate(0, -5px);}
+    55% {transform: var(--transform-base) translate(-1.545084972px, -4.755282581px);}
+    60% {transform: var(--transform-base) translate(-2.938926261px, -4.045084972px);}
+    65% {transform: var(--transform-base) translate(-4.045084972px, -2.938926261px);}
+    70% {transform: var(--transform-base) translate(-4.755282581px, -1.545084972px);}
+    75% {transform: var(--transform-base) translate(-5px, 0);}
+    80% {transform: var(--transform-base) translate(-4.755282581px, 1.545084972px);}
+    85% {transform: var(--transform-base) translate(-4.045084972px, 2.938926261px);}
+    90% {transform: var(--transform-base) translate(-2.938926261px, 4.045084972px);}
+    95% {transform: var(--transform-base) translate(-1.545084972px, 4.755282581px);}
+    100% {transform: var(--transform-base) translate(0, 5px);}
 }
 
 /*  Compact Layout  */
@@ -534,7 +596,6 @@ a.footnote-backref {
         left: auto;
         bottom: auto;
         display: flex;
-        overflow: hidden;
         align-items: baseline;
         background-color: var(--dark-accent-background-color);
         padding: 0.5rem 2rem;
@@ -552,11 +613,13 @@ a.footnote-backref {
 
     .site-nav .site-badge {
         overflow: hidden;
+        margin-right: 1em;
+        padding-right: 1em;
+        mask: linear-gradient(to left, transparent, red 1em);
     }
 
     .site-nav-list {
         margin-left: auto;
-        box-shadow: var(--dark-accent-background-color) -1em 0 1em 1em;
     }
 
     .site-nav-list > li {
@@ -609,6 +672,24 @@ a.footnote-backref {
         margin-left: auto;
         margin-right: auto;
     }
+
+    @supports (transform: var(--transform-base)) {
+        .site-nav.at-root .site-nav-link-about::after,
+        .site-nav.at-root .site-nav-link-posts::after {
+            left: 0;
+            margin-left: -8px;
+            margin-top: 28px;
+        }
+    
+        .site-nav.at-root .site-nav-link-about::after {
+            --transform-base: scaleY(-1) rotate(240deg) scale(0.9);
+        }
+    
+        .site-nav.at-root .site-nav-link-posts::after {
+            background-position: 32px 0;
+            --transform-base: scaleY(-1) rotate(250deg);
+        }
+    }
 }
 
 @media (max-width: 480px) {
@@ -630,113 +711,114 @@ a.footnote-backref {
     }
 }
 
-
 /*  Syntax Highlighting  */
 
-.highlighter-rouge .esc /* Escape */,
-.highlighter-rouge .err /* Error */,
-.highlighter-rouge .x /* Other */ {
-    color: var(--text-color);  /*  Do nothing  */
-}
+.highlighter-rouge {
+    .esc /* Escape */,
+    .err /* Error */,
+    .x /* Other */ {
+        color: var(--text-color);  /*  Do nothing  */
+    }
 
-.highlighter-rouge .o /* Operator */,
-.highlighter-rouge .ow /* Word */,
-.highlighter-rouge .p /* Punctuation */,
-.highlighter-rouge .pi /* Indicator */ {
-    color: var(--text-color);  /*  Do nothing  */
-}
+    .o /* Operator */,
+    .ow /* Word */,
+    .p /* Punctuation */,
+    .pi /* Indicator */ {
+        color: var(--text-color);  /*  Do nothing  */
+    }
 
-.highlighter-rouge .c /* Comment */,
-.highlighter-rouge .ch /* Hashbang */,
-.highlighter-rouge .cd /* Doc */,
-.highlighter-rouge .cm /* Multiline */,
-.highlighter-rouge .c1 /* Single */,
-.highlighter-rouge .cs /* Special */ {
-    color: var(--sh-comment-color);
-}
+    .c /* Comment */,
+    .ch /* Hashbang */,
+    .cd /* Doc */,
+    .cm /* Multiline */,
+    .c1 /* Single */,
+    .cs /* Special */ {
+        color: var(--sh-comment-color);
+    }
 
-.highlighter-rouge .cp /* Preproc */,
-.highlighter-rouge .cpf /* PreprocFile */ {
-    color: var(--sh-macro-color);
-}
+    .cp /* Preproc */,
+    .cpf /* PreprocFile */ {
+        color: var(--sh-macro-color);
+    }
 
-.highlighter-rouge .k /* Keyword */,
-.highlighter-rouge .kc /* Constant */,
-.highlighter-rouge .kd /* Declaration */,
-.highlighter-rouge .kn /* Namespace */,
-.highlighter-rouge .kp /* Pseudo */,
-.highlighter-rouge .kr /* Reserved */,
-.highlighter-rouge .kt /* Type */,
-.highlighter-rouge .kv /* Variable */ {
-    color: var(--sh-keyword-color);
-    font-weight: bold;
-}
+    .k /* Keyword */,
+    .kc /* Constant */,
+    .kd /* Declaration */,
+    .kn /* Namespace */,
+    .kp /* Pseudo */,
+    .kr /* Reserved */,
+    .kt /* Type */,
+    .kv /* Variable */ {
+        color: var(--sh-keyword-color);
+        font-weight: bold;
+    }
 
-.highlighter-rouge .l /* Literal */,
-.highlighter-rouge .ld /* Date */,
-.highlighter-rouge .m /* Number */,
-.highlighter-rouge .mb /* Bin*/,
-.highlighter-rouge .mf /* Float*/,
-.highlighter-rouge .mh /* Hex*/,
-.highlighter-rouge .mi /* Integer*/,
-.highlighter-rouge .il /* Long*/,
-.highlighter-rouge .mo /* Oct*/,
-.highlighter-rouge .mx /* Other*/,
-.highlighter-rouge .sc /* Char */ {
-    color: var(--sh-number-color);
-}
+    .l /* Literal */,
+    .ld /* Date */,
+    .m /* Number */,
+    .mb /* Bin*/,
+    .mf /* Float*/,
+    .mh /* Hex*/,
+    .mi /* Integer*/,
+    .il /* Long*/,
+    .mo /* Oct*/,
+    .mx /* Other*/,
+    .sc /* Char */ {
+        color: var(--sh-number-color);
+    }
 
-.highlighter-rouge .s /* String */,
-.highlighter-rouge .sa /* Affix */,
-.highlighter-rouge .sb /* Backtick */,
-.highlighter-rouge .dl /* Delimiter */,
-.highlighter-rouge .sd /* Doc */,
-.highlighter-rouge .s2 /* Double */,
-.highlighter-rouge .se /* Escape */,
-.highlighter-rouge .sh /* Heredoc */,
-.highlighter-rouge .si /* Interpol */,
-.highlighter-rouge .sx /* Other */,
-.highlighter-rouge .sr /* Regex */,
-.highlighter-rouge .s1 /* Single */,
-.highlighter-rouge .ss /* Symbol */ {
-    color: var(--sh-string-color);
-}
+    .s /* String */,
+    .sa /* Affix */,
+    .sb /* Backtick */,
+    .dl /* Delimiter */,
+    .sd /* Doc */,
+    .s2 /* Double */,
+    .se /* Escape */,
+    .sh /* Heredoc */,
+    .si /* Interpol */,
+    .sx /* Other */,
+    .sr /* Regex */,
+    .s1 /* Single */,
+    .ss /* Symbol */ {
+        color: var(--sh-string-color);
+    }
 
-.highlighter-rouge .n /* Name */,
-.highlighter-rouge .nv /* Variable */ {
-    color: var(--text-color);  /*  Do nothing  */
-}
+    .n /* Name */,
+    .nv /* Variable */ {
+        color: var(--text-color);  /*  Do nothing  */
+    }
 
-.highlighter-rouge .nb /* Builtin */,
-.highlighter-rouge .nt /* Tag (CSS) */ {
-    color: var(--sh-key-type-color);
-}
+    .nb /* Builtin */,
+    .nt /* Tag (CSS) */ {
+        color: var(--sh-key-type-color);
+    }
 
-.highlighter-rouge.language-swift .kt  {
-    /* Swift types are not keywords */
-    color: var(--sh-key-type-color);
-    font-weight: inherit;
-}
+    &.language-swift .kt  {
+        /* Swift types are not keywords */
+        color: var(--sh-key-type-color);
+        font-weight: inherit;
+    }
 
-.highlighter-rouge .nn /* Namespace */,
-.highlighter-rouge .nx /* Other */,
-.highlighter-rouge .nd /* Decorator */,
-.highlighter-rouge .nc /* Class (CSS) */ {
-    color: var(--sh-other-type-color);
-}
+    .nn /* Namespace */,
+    .nx /* Other */,
+    .nd /* Decorator */,
+    .nc /* Class (CSS) */ {
+        color: var(--sh-other-type-color);
+    }
 
-.highlighter-rouge .na /* Attribute */,
-.highlighter-rouge .bp /* Pseudo */,
-.highlighter-rouge .no /* Constant */,
-.highlighter-rouge .ni /* Entity */,
-.highlighter-rouge .ne /* Exception */,
-.highlighter-rouge .nf /* Function */,
-.highlighter-rouge .fm /* Magic */,
-.highlighter-rouge .py /* Property */,
-.highlighter-rouge .vc /* Class */,
-.highlighter-rouge .vg /* Global */,
-.highlighter-rouge .vi /* Instance */,
-.highlighter-rouge .vm /* Magic */,
-.highlighter-rouge .nl /* Label */ {
-    color: var(--sh-member-color);
+    .na /* Attribute */,
+    .bp /* Pseudo */,
+    .no /* Constant */,
+    .ni /* Entity */,
+    .ne /* Exception */,
+    .nf /* Function */,
+    .fm /* Magic */,
+    .py /* Property */,
+    .vc /* Class */,
+    .vg /* Global */,
+    .vi /* Instance */,
+    .vm /* Magic */,
+    .nl /* Label */ {
+        color: var(--sh-member-color);
+    }
 }

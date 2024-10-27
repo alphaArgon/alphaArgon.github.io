@@ -4,7 +4,7 @@
     "baseurl":      "/",
     "permalink":    "/posts/:slug",
 
-    "lang":         "zh",
+    "lang":         "zh-Hans",
     "encoding":     "utf-8",
     "timezone":     "Asia/Shanghai",
     "date_format":  "%Y/%m/%d",

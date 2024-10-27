@@ -1,75 +1,56 @@
+const nextTickDo = (function () {
+    if ("queueMicrotask" in window) {
+        return queueMicrotask;
+    }
+
+    if ("Promise" in window) {
+        return function (callback) {Promise.resolve().then(callback);}
+    }
+
+    return function (callback) {setTimeout(callback, 0);}
+})();
+
 (function () {
     if (document.readyState !== "loading") {
-        initialize();
+        initializeCallback();
     } else {
-        document.addEventListener("DOMContentLoaded", initialize);
+        document.addEventListener("DOMContentLoaded", initializeCallback);
     }
 
-    if ("ResizeObserver" in window) {
-        //  FIXME: Safari: ResizeObserver loop completed with undelivered notifications.
-        let resizeObserver = new ResizeObserver(sizeContent);
-        resizeObserver.observe(document.documentElement);
-    } else {
-        window.addEventListener("resize", sizeContent);
-        window.addEventListener("orientationchange", sizeContent);
-    }
+    function initializeCallback() {
+        relayoutCallback();
 
-    function initialize() {
-        sizeContent();
-    }
-
-    function positionNotes(viewportWidth, mainRight, fontSize) {
-        let footnotes = document.querySelector(".footnotes");  //  Currently only one.
-        if (footnotes === null) {return;}
-
-        let sideWidth = viewportWidth - mainRight - fontSize * 3.5;
-        let sideLeft = mainRight + Math.max(fontSize * 2.5, Math.floor(sideWidth * 0.1));
-
-        let smallFontSize = fontSize * 0.8125;  //  13
-        let smallEms = Math.floor(sideWidth / smallFontSize);
-        if (smallEms < 14) {
-            sideWidth = 0;
+        if ("ResizeObserver" in window) {
+            //  It’s also possible to add `ResizeObserver` to other elements that may affect the layout,
+            //  or footnote back targets, but that’s too massive. The page is basically static.
+            //  FIXME: Safari: ResizeObserver loop completed with undelivered notifications.
+            let resizeObserver = new ResizeObserver(relayoutCallback);
+            resizeObserver.observe(document.documentElement);
         } else {
-            smallEms = Math.min(smallEms, 22);
-            sideWidth = smallEms * smallFontSize;
+            window.addEventListener("resize", relayoutCallback);
+            window.addEventListener("orientationchange", relayoutCallback);
         }
 
-        let lis = footnotes.querySelectorAll(`li[id^="fn"]`);
-        let liTops = Array.prototype.map.call(lis, li => {
-            if (sideWidth === 0) {return {li, top: NaN};}
-
-            let backlink = li.querySelector("a.footnote-backref");
-            if (backlink === null) {return {li, top: NaN};}
-
-            let backtarget = document.querySelector(backlink.hash);
-            if (backtarget === null) {return {li, top: NaN};}
-
-            let top = backtarget.offsetTop;
-            return {li, top};
-        });
-
-        let allSidenotes = true;
-        let lastBottom = 0;
-        for (let {li, top} of liTops) {
-            if (isNaN(top)) {
-                li.classList.remove("sidenote");
-                li.removeAttribute("style");
-                allSidenotes = false;
-            } else {
-                top = Math.max(top, lastBottom);
-                li.classList.add("sidenote");
-                li.style.position = "absolute";
-                li.style.top = top + "px";
-                li.style.left = sideLeft + "px";
-                li.style.width = sideWidth + "px";
-                lastBottom = top + li.offsetHeight;
-            }
-        }
-
-        footnotes.classList.toggle("all-sidenotes", allSidenotes);
+        //  Images loading may affect the layout. Capture all `load` events.
+        document.addEventListener("load", () => {
+            setTimeout(relayoutCallback, 0);  //  Not sure if the layout is done by now.
+        }, true);
     }
 
-    function sizeContent(args) {
+    let _layoutPageRequested = 0;
+    function relayoutCallback(arg) {
+        if (!_layoutPageRequested) {
+            nextTickDo(() => {
+                _sizeContent(_layoutPageRequested);
+                _layoutPageRequested = 0;
+            });
+        }
+
+        let times = ("ResizeObserverEntry" in window && arg instanceof ResizeObserverEntry) ? 1 : 2;
+        _layoutPageRequested = Math.max(_layoutPageRequested, times);
+    }
+
+    function _sizeContent(times = 1) {
         let main = document.querySelector(".main");
         if (main === null) {return;}
 
@@ -83,8 +64,7 @@
         let siteBadgeStyle = getComputedStyle(siteBadge);
 
         let prevViewportWidth = NaN;
-        let times = ("ResizeObserverEntry" in window && args instanceof ResizeObserverEntry) ? 1 : 2;
-        for (let i = 0; i < times; i++) {
+        for (let i = 0; i < times; ++i) {
             let viewportWidth = root.clientWidth;
             if (prevViewportWidth === viewportWidth) {break;}
 
@@ -140,8 +120,54 @@
             }
 
             let mainRight = mainMarginLeft + mainPaddingLeft + mainWidth;  //  No padding-right.
-            positionNotes(viewportWidth, mainRight, fontSize);
+            _positionNotes(viewportWidth, mainRight, fontSize);
             prevViewportWidth = viewportWidth;
         }
     };
+
+    function _positionNotes(viewportWidth, mainRight, fontSize) {
+        let footnotes = document.querySelector(".footnotes");  //  Currently only one.
+        if (footnotes === null) {return;}
+
+        let sideWidth = viewportWidth - mainRight - fontSize * 3.5;
+        let sideLeft = mainRight + Math.max(fontSize * 2.5, Math.floor(sideWidth * 0.1));
+
+        let smallFontSize = fontSize * 0.8125;  //  13
+        let smallEms = Math.floor(sideWidth / smallFontSize);
+        if (smallEms < 14) {
+            sideWidth = 0;
+            footnotes.classList.remove("all-sidenotes");
+        } else {
+            smallEms = Math.min(smallEms, 22);
+            sideWidth = smallEms * smallFontSize;
+            footnotes.classList.add("all-sidenotes");
+        }
+
+        let lastBottom = 0;
+        footnotes.querySelectorAll(`li[id^="fn"]`).forEach(li => {
+            if (sideWidth === 0) {
+                li.classList.remove("sidenote");
+                li.removeAttribute("style");
+                return;
+            }
+
+            let top = lastBottom;
+
+            let backLink = li.querySelector("a.footnote-backref");
+            if (backLink !== null) {
+                let backTarget = document.querySelector(backLink.hash);
+                if (backTarget !== null) {
+                    //  Reflow should be triggered at most once.
+                    //  `.all-sidenotes` is positioned absolutely, and won’t affect the main content.
+                    top = Math.max(top, backTarget.offsetTop);
+                }
+            }
+
+            li.classList.add("sidenote");  //  Also makes the note positioned absolutely.
+            li.style.top = top + "px";
+            li.style.left = sideLeft + "px";
+            li.style.width = sideWidth + "px";
+            lastBottom = top + li.offsetHeight;
+        });
+    }
 })();
