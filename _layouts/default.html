@@ -20,7 +20,7 @@
     {%- case page.url -%}
     {%- when "/", "/index", "/index.html" -%}
         {%- assign is_root_page = true -%}
-        <span class="site-badge" role="complementary">{{ site.title }}</span>
+        <span class="site-badge" role="complementary" translate="no">{{ site.title }}</span>
     {%- else -%}
         {%- assign components = page.url | split: '/' -%}
         {%- assign slice_length = components | size | minus: 1 -%}
@@ -28,24 +28,24 @@
         {%- if updir == "" -%}
             {%- assign updir = "/" -%}
         {%- endif -%}
-        <a class="site-badge" href="{{ updir | relative_url }}" role="complementary" rel="up">{{ site.title }}</a>
+        <a class="site-badge" href="{{ updir | relative_url }}" role="complementary" rel="up" translate="no">{{ site.title }}</a>
     {%- endcase -%}
 {%- endcapture -%}
 <body ontouchstart>
 {% if is_root_page %}
-        <nav class="site-nav at-root">
+    <nav class="site-nav at-root">
 {% else %}
-        <nav class="site-nav">
+    <nav class="site-nav">
 {% endif %}
         {{ site_badge }}
-        <ul class="site-nav-list">
+        <ul class="site-nav-list" lang="en">
             <li><a class="site-nav-link-home" href="{{ '/' | relative_url }}">Home</a></li>
             <li><a class="site-nav-link-about" href="{{ '/about' | relative_url }}">About</a></li>
             <li><a class="site-nav-link-posts" href="{{ '/posts' | relative_url }}">Posts</a></li>
         </ul>
     </nav>
-    <nav class="link-nav" lang="en">
-        <ul class="link-nav-list">
+    <nav class="link-nav">
+        <ul class="link-nav-list" lang="en">
             <li><a href="https://github.com/alphaArgon" target="_blank"><i class="icon-github"></i><span class="visually-hidden">GitHub</span></a></li>
             <li><a href="https://twitter.com/alpha_argon" target="_blank"><i class="icon-twitter"></i><span class="visually-hidden">Twitter</span></a></li>
         </ul>
@@ -99,7 +99,7 @@
 {%- if page.copyright -%}
         <div class="copyright caption">{{ page.copyright }}</div>
 {%- elsif page.date -%}
-        <div class="copyright caption">&copy; {{ page.date | date: "%Y" }} {{ site.title | upcase }}</div>
+        <div class="copyright caption">&copy; {{ page.date | date: "%Y" }} <span translate="no">{{ site.title | upcase }}</span></div>
 {%- endif -%}
     </main>
 </body>
