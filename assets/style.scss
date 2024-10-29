@@ -166,6 +166,7 @@ ul ul ul {list-style-type: circle;}
 
 ::marker {
     color: var(--accent-text-color);
+    font-variant-numeric: normal;
 }
 
 blockquote {
@@ -187,8 +188,10 @@ blockquote::before {
 pre, code {
     /*  Monospace font looks larger  */
     font-size: 87.5%;
-    font-family: "Lucida Sans Typewriter", "Lucida Console", "Menlo", "Courier New", monospace;
+    font-family: "Lucida Sans Typewriter", "Lucida Console", "Menlo", "DejaVu Sans Mono", "Consolas", monospace;
     line-height: 1.5714285714;
+    -webkit-hyphens: none;
+    hyphens: none;
 }
 
 pre pre,
@@ -217,16 +220,6 @@ code {
     background-color: var(--secondary-background-color);
     white-space: pre-wrap;
     white-space: break-spaces;
-
-    /*  Allows breaking inside words  */
-    -webkit-locale: "en";
-    -webkit-hyphens: auto;
-    -webkit-hyphenate-character: "";
-    -webkit-hyphenate-limit-after: 4;
-    -webkit-hyphenate-limit-before: 4;
-    hyphens: auto;
-    hyphenate-character: "";
-    hyphenate-limit-chars: auto 4 4;
 }
 
 table {
@@ -563,27 +556,8 @@ a.footnote-backref {
 }
 
 @keyframes circular-path-small {
-    00% {transform: var(--transform-base) translate(0, 5px);}
-    05% {transform: var(--transform-base) translate(1.545084972px, 4.755282581px);}
-    10% {transform: var(--transform-base) translate(2.938926261px, 4.045084972px);}
-    15% {transform: var(--transform-base) translate(4.045084972px, 2.938926261px);}
-    20% {transform: var(--transform-base) translate(4.755282581px, 1.545084972px);}
-    25% {transform: var(--transform-base) translate(5px, 0);}
-    30% {transform: var(--transform-base) translate(4.755282581px, -1.545084972px);}
-    35% {transform: var(--transform-base) translate(4.045084972px, -2.938926261px);}
-    40% {transform: var(--transform-base) translate(2.938926261px, -4.045084972px);}
-    45% {transform: var(--transform-base) translate(1.545084972px, -4.755282581px);}
-    50% {transform: var(--transform-base) translate(0, -5px);}
-    55% {transform: var(--transform-base) translate(-1.545084972px, -4.755282581px);}
-    60% {transform: var(--transform-base) translate(-2.938926261px, -4.045084972px);}
-    65% {transform: var(--transform-base) translate(-4.045084972px, -2.938926261px);}
-    70% {transform: var(--transform-base) translate(-4.755282581px, -1.545084972px);}
-    75% {transform: var(--transform-base) translate(-5px, 0);}
-    80% {transform: var(--transform-base) translate(-4.755282581px, 1.545084972px);}
-    85% {transform: var(--transform-base) translate(-4.045084972px, 2.938926261px);}
-    90% {transform: var(--transform-base) translate(-2.938926261px, 4.045084972px);}
-    95% {transform: var(--transform-base) translate(-1.545084972px, 4.755282581px);}
-    100% {transform: var(--transform-base) translate(0, 5px);}
+    from {transform: var(--transform-base) rotate(0) translate(0, 5px) rotate(0);}
+    to {transform: var(--transform-base) rotate(-1turn) translate(0, 5px) rotate(1turn);}
 }
 
 /*  Compact Layout  */
