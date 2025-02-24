@@ -1,6 +1,5 @@
 ---
 title: PingFangUI VF 的说明（苹方系列一）
-cover: images/dithering-cover.png
 source: https://github.com/ACT-02/PingFangUI-VF
 excerpt: 有关 iOS 18, macOS Sequoia, etc. 新增的苹方 VF，及公布在 GitHub 上其提取版本的说明。
 ---
@@ -9,7 +8,7 @@ excerpt: 有关 iOS 18, macOS Sequoia, etc. 新增的苹方 VF，及公布在 Gi
 
 {%  include figure.html
     width="440"
-    caption="你看这个封面，扭得很像虫子"
+    caption="你看这个封面，扭得很像虫子（如果加载出来的话）"
     img="images/pingfangui-vf-readme-tagline.gif"  %}
 
 已知 iOS 18 (macOS Sequoia, watchOS 11, ...) 在 UI 中使用了更粗的苹方。至此，系统中存在两份苹方，一者继承自原先的苹方，但被降级为用户可安装字体，在首次请求时下载；一者作为系统字体，使用私有格式。前者依然为六个字重，不过新增了澳门地区字形（苹方-澳）；后者则为可变字体，不仅新增了澳门地区字形，还包含了与 SF 统一的 9 个字重。
