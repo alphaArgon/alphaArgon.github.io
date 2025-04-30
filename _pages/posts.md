@@ -17,7 +17,9 @@ title: Posts
                 <small class="post-entry-excerpt">{{ post.excerpt }}</small>
     {%- if post.date -%}
                 <div class="post-entry-meta">
-                    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site.date_format }}</time>
+                    <time datetime="{{ post.date | date_to_xmlschema }}">
+        {%- include dates.html start=post.date end=post.revision -%}
+                    </time>
                 </div>
     {%- endif -%}
             </figure>

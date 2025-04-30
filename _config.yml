@@ -1,28 +1,31 @@
 {
-    "title":        "://argon.red",
-    "url":          "https://argon.red",
-    "baseurl":      "/",
-    "permalink":    "/posts/:slug",
+    "title":                "://argon.red",
+    "url":                  "https://argon.red",
+    "baseurl":              "/",
+    "permalink":            "/posts/:slug",
 
-    "lang":         "zh-Hans",
-    "encoding":     "utf-8",
-    "timezone":     "Asia/Shanghai",
-    "date_format":  "%Y/%-m/%-d",
+    "lang":                 "zh-Hans",
+    "encoding":             "utf-8",
+    "timezone":             "Asia/Shanghai",
+    "date_format":          "%Y/%-m/%-d",
+    "date_format_no_year":  "%-m/%-d",
 
-    "defaults": [{
-        "scope":    { "path": "" },
-        "values":   { "layout": "default" }
-    }],
+    "defaults": [
+        {
+            "scope":        { "path": "" },
+            "values":       { "layout": "default" }
+        }
+    ],
 
     "sass": {
-        "style":    "compressed"
+        "style":            "compressed"
     },
 
-    "include":      [ "_pages" ],
+    "include":              [ "_pages" ],
 
-    "markdown":     "GFM",
+    "markdown":             "GFM",
 
     "kramdown": {  #  In case of using Kramdown.
-        "smart_quotes": [ "apos", "apos", "quot", "quot" ]  #  This is annoying for a typographer.
+        "smart_quotes":     [ "apos", "apos", "quot", "quot" ]  #  This is annoying for a typographer.
     }
 }

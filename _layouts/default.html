@@ -64,7 +64,9 @@
     {%- if page.date or page.source -%}
                 <div class="page-meta">
         {%- if page.date -%}
-                    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: site.date_format }}</time>
+                <time datetime="{{ page.date | date_to_xmlschema }}">
+            {%- include dates.html start=page.date end=page.revision -%}
+                </time>
         {%- endif -%}
         {%- if page.source -%}
             {%- assign short_name = page.source | split: "//" | last | split: "/" | first -%}

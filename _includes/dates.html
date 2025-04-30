@@ -1,0 +1,11 @@
+{%- if include.end -%}
+    {%- assign start_year = include.start | date: "%Y" -%}
+    {%- assign end_year = include.end | date: "%Y" -%}
+    {%- if start_year == end_year -%}
+{{ include.start | date: site.date_format }}‒{{ include.end | date: site.date_format_no_year}}
+    {%- else -%}
+{{ include.start | date: site.date_format }}‒{{ include.end | date: site.date_format}}
+    {%- endif -%}
+{%- else -%}
+{{ include.start | date: site.date_format }}
+{%- endif -%}

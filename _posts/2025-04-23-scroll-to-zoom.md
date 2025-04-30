@@ -2,6 +2,7 @@
 title: Scroll to Zoom 后记
 cover: images/scroll-to-zoom-banner.png
 excerpt: 谁想在 2025 年用 Objective-C 开发兼容到 macOS High Sierra 的应用啊？本文将讨论 “滚动来缩放” 的实现思路、原理，以及有意思的系统兼容性问题。
+revision: 2025-04-30
 ---
 
 > 谁想在 2025 年用 Objective-C 开发兼容到 macOS High Sierra 的应用啊？
@@ -170,7 +171,9 @@ Scroll to Zoom 的修饰键输入框是自绘的控件，绘制使用了一些 �
 ## 期望的功能
 
 - 对于一般鼠标，允许按住侧边键而不是修饰键来缩放 — 在 v1.0b2 已经实现。
-- 对于 Magic Mouse，点一下上盖并按住滑动来缩放 — 目前很难实现。点击上盖并不会发送 CGEvent，它需要更深的 hack。
+- 对于 Magic Mouse，点一下上盖并按住滑动来缩放 — 目前很难实现。点击上盖并不会发送 CGEvent，它需要更深的 hack[^dot-dash]。
+
+[^dot-dash]: 在 v1.0 实现了。它调用了私有库  MultitouchSupport.framework 来监听上盖接触。
 
 
 ## Fun Fact
