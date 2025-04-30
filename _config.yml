@@ -7,7 +7,7 @@
     "lang":         "zh-Hans",
     "encoding":     "utf-8",
     "timezone":     "Asia/Shanghai",
-    "date_format":  "%Y/%m/%d",
+    "date_format":  "%Y/%-m/%-d",
 
     "defaults": [{
         "scope":    { "path": "" },
