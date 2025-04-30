@@ -14,6 +14,17 @@
         {{ site.title | escape }}
 {%- endif -%}
     </title>
+    <meta property="og:site_name" content="{{ site.title | escape }}">
+    <meta property="og:title" content="{{ page.title | site.title | escape }}">
+{%- assign url_components = page.url | split: '/' -%}
+{%- if url_components[1] == "posts" and url_components[2] -%}
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:description" content="{{ page.excerpt | escape }}">
+    {%- if page.cover -%}
+    <meta property="og:image" content="{{ page.cover | absolute_url }}">
+    {%- endif -%}
+{%- endif -%}
 </head>
 {%- assign is_root_page = false -%}
 {%- capture site_badge -%}
@@ -22,9 +33,8 @@
         {%- assign is_root_page = true -%}
         <span class="site-badge" role="complementary" translate="no">{{ site.title }}</span>
     {%- else -%}
-        {%- assign components = page.url | split: '/' -%}
-        {%- assign slice_length = components | size | minus: 1 -%}
-        {%- assign updir = components | slice: 0, slice_length | join: '/' -%}
+        {%- assign slice_length = url_components | size | minus: 1 -%}
+        {%- assign updir = url_components | slice: 0, slice_length | join: '/' -%}
         {%- if updir == "" -%}
             {%- assign updir = "/" -%}
         {%- endif -%}
