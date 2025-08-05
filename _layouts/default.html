@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}"/>
     <script src="{{ '/assets/style.js' | relative_url }}"></script>
     <title>
-{%- if page.title -%}
-        {{ page.title | escape }} @ {{ site.title | escape }}
+{%- if page.title and page.tabtitle != "" -%}
+        {{ page.tabtitle | default: page.title | escape }} @ {{ site.title | escape }}
 {%- else -%}
         {{ site.title | escape }}
 {%- endif -%}
     </title>
     <meta property="og:site_name" content="{{ site.title | escape }}">
-    <meta property="og:title" content="{{ page.title | site.title | escape }}">
+    <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
 {%- assign url_components = page.url | split: '/' -%}
 {%- if url_components[1] == "posts" and url_components[2] -%}
     <meta property="og:type" content="article">
@@ -31,36 +31,37 @@
     {%- case page.url -%}
     {%- when "/", "/index", "/index.html" -%}
         {%- assign is_root_page = true -%}
-        <span class="site-badge" role="complementary" translate="no">{{ site.title }}</span>
+        <span class="site-badge" translate="no">{{ site.title }}</span>
     {%- else -%}
         {%- assign slice_length = url_components | size | minus: 1 -%}
         {%- assign updir = url_components | slice: 0, slice_length | join: '/' -%}
         {%- if updir == "" -%}
             {%- assign updir = "/" -%}
         {%- endif -%}
-        <a class="site-badge" href="{{ updir | relative_url }}" role="complementary" rel="up" translate="no">{{ site.title }}</a>
+        <a class="site-badge" href="{{ updir | relative_url }}" rel="up" translate="no">{{ site.title }}</a>
     {%- endcase -%}
 {%- endcapture -%}
 <body ontouchstart>
-{% if is_root_page %}
-    <nav class="site-nav at-root">
-{% else %}
+    <div class="sidebar-background"></div>
     <nav class="site-nav">
-{% endif %}
-        {{ site_badge }}
-        <ul class="site-nav-list" lang="en">
+        <ul class="nav-list" lang="en">
+            <li class="site-nav-badge-item">{{ site_badge }}</li>
             <li><a class="site-nav-link-home" href="{{ '/' | relative_url }}">Home</a></li>
-            <li><a class="site-nav-link-about" href="{{ '/about' | relative_url }}">About</a></li>
-            <li><a class="site-nav-link-posts" href="{{ '/posts' | relative_url }}">Posts</a></li>
+            <li><a class="site-nav-link-works" href="{{ '/works' | relative_url }}">Works{% if is_root_page %}<i class="fly"></i>{% endif %}</a></li>
+            <li><a class="site-nav-link-posts" href="{{ '/posts' | relative_url }}">Posts{% if is_root_page %}<i class="fly"></i>{% endif %}</a></li>
         </ul>
     </nav>
     <nav class="link-nav">
-        <ul class="link-nav-list" lang="en">
-            <li><a href="https://github.com/alphaArgon" target="_blank"><i class="icon-github"></i><span class="visually-hidden">GitHub</span></a></li>
-            <li><a href="https://twitter.com/alpha_argon" target="_blank"><i class="icon-twitter"></i><span class="visually-hidden">Twitter</span></a></li>
+        <ul class="nav-list" lang="en">
+            <li><a href="https://github.com/alphaArgon" target="_blank"><i class="em-icon icon-github"></i><span class="visually-hidden">GitHub</span></a></li>
+            <li><a href="https://twitter.com/alpha_argon" target="_blank"><i class="em-icon icon-twitter"></i><span class="visually-hidden">Twitter</span></a></li>
         </ul>
     </nav>
+{%- if page.pclass -%}
+    <main class="main {{ page.pclass }}">
+{%- else -%}
     <main class="main">
+{%- endif -%}
 {%- if page.cover -%}
         <img class="page-banner-image" src="{{ page.cover | relative_url }}" role="banner">
 {%- endif -%}
@@ -69,14 +70,18 @@
 {%- if page.title or page.date or page.source -%}
             <header class="page-header">
     {%- if page.title -%}
+        {%- if page.tclass -%}
+                <h1 id="page-title" class="page-title {{ page.tclass }}">{{ page.title }}</h1>
+        {%- else -%}
                 <h1 id="page-title" class="page-title">{{ page.title }}</h1>
+        {%- endif -%}
     {%- endif -%}
     {%- if page.date or page.source -%}
                 <div class="page-meta">
         {%- if page.date -%}
-                <time datetime="{{ page.date | date_to_xmlschema }}">
-            {%- include dates.html start=page.date end=page.revision -%}
-                </time>
+                    <time datetime="{{ page.date | date_to_xmlschema }}">
+                        {%- include dates.html start=page.date end=page.revision -%}
+                    </time>
         {%- endif -%}
         {%- if page.source -%}
             {%- assign short_name = page.source | split: "//" | last | split: "/" | first -%}

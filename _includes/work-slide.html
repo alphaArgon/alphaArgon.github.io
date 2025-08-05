@@ -1,0 +1,18 @@
+<figure class="work-slide">
+{%- if include.img1 -%}
+ <div class="work-slide-image-group">
+    {%- if include.img1 -%}
+  <img class="work-slide-image" src="{{ include.img1 | relative_url }}">
+    {%- endif -%}
+    {%- if include.img2 -%}
+  <img class="work-slide-image" src="{{ include.img2 | relative_url }}">
+    {%- endif -%}
+    {%- if include.img3 -%}
+  <img class="work-slide-image" src="{{ include.img3 | relative_url }}">
+    {%- endif -%}
+ </div>
+{%- else -%}
+ <img class="work-slide-image" src="{{ include.img | relative_url }}">
+{%- endif -%}
+ <figcaption class="work-slide-title"><span class="sticky">{{ include.caption }}</span></figcaption>
+</figure>

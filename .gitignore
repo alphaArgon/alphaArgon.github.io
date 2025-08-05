@@ -1,3 +1,4 @@
 .DS_Store
-**/.DS_Store
-_private_drafts/
+_debug
+_preprocess/node_modules/
+_preprocess/package-lock.json

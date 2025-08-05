@@ -1,0 +1,9 @@
+<li class="work-list-item">
+ <a href="{{ include.url }}" target="_blank">
+  <figure class="work-entry">
+   <img class="work-entry-image" src="{{ include.img | relative_url }}">
+   <figcaption class="work-entry-title">{{ include.title }}</figcaption>
+   <div class="work-entry-meta">{{ include.meta }}</div>
+  </figure>
+ </a>
+</li>

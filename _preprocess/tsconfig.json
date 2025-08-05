@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "alwaysStrict": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noImplicitOverride": true,
+        "target": "es2017",
+        "module": "es2015",
+        "lib": ["es2017", "dom", "dom.iterable"],
+        "removeComments": true,
+    }
+}

@@ -8,6 +8,7 @@
     "encoding":             "utf-8",
     "timezone":             "Asia/Shanghai",
     "date_format":          "%Y/%-m/%-d",
+    "date_format_no_date":  "%Y/%-m",
     "date_format_no_year":  "%-m/%-d",
 
     "defaults": [
@@ -16,10 +17,6 @@
             "values":       { "layout": "default" }
         }
     ],
-
-    "sass": {
-        "style":            "compressed"
-    },
 
     "include":              [ "_pages" ],
 
