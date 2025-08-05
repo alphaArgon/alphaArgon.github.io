@@ -402,11 +402,15 @@ body {
 }
 
 .hero-title {
-    margin: 55vh 0 0;
-    margin-top: 55svh;
-    padding-right: 0.5em;
     line-height: 1;
     font-size: 128px;
+    margin: calc(70vh - 1em) 0 0;
+    margin-top: calc(70svh - 1em);
+
+    &.biline {
+        margin-top: calc(70vh - 2em);
+        margin-top: calc(70svh - 2em);
+    }
 }
 
 .hero-chevron-up {
