@@ -5,9 +5,8 @@ tclass: visually-hidden
 pclass: wide
 ---
 
-<h2 class="h1-like">Typefaces</h2>
-
-{%  include work-ul-begin.html %}
+{%  include work-ul-begin.html
+    title="Typefaces" %}
 
  {%  include work-li-begin.html
      img="images/portfolio-caesium-1.svg"
@@ -86,7 +85,7 @@ pclass: wide
      meta="2021/7" %}
 
   {%  include work-slide.html
-      caption="与当时最知名丁卯不同点阵体，这款点阵反其道而行之，极力避免避免黑块"
+      caption="与当时普遍的点阵不同，这款点阵在保证辨识度的前提下极力避免黑块"
       img="images/portfolio-bitmap-1.svg" %}
 
   {%  include work-slide.html
@@ -120,5 +119,77 @@ pclass: wide
       img="images/portfolio-argon-5.svg" %}
 
  {%  include work-li-end.html %}
+
+{%  include work-ul-end.html %}
+
+
+{%  include work-ul-begin.html
+    title="Mac Apps" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-scroll-to-zoom.jpg"
+     url="https://github.com/alphaArgon/ScrollToZoom"
+     title="Scroll to Zoom"
+     meta="2025/4" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-han-counter.jpg"
+     url="https://github.com/NightFurySL2001/cjk-count-mac"
+     title="Han Count"
+     meta="2023/1" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-some-clock.jpg"
+     url="https://github.com/alphaArgon/SomeClock"
+     title="Some Clock"
+     meta="2021/10" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-minesweeper.jpg"
+     url="https://github.com/alphaArgon/Minesweeper"
+     title="Minesweeper"
+     meta="2021/7" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-prism.jpg"
+     url="https://github.com/alphaArgon/Prism"
+     title="Minesweeper"
+     meta="2020/10" %}
+
+{%  include work-ul-end.html %}
+
+
+{%  include work-ul-begin.html
+    title="Web Libs" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-cocoa-dom.jpg"
+     url="https://github.com/alphaArgon/CocoaDOM"
+     title="Cocoa DOM"
+     meta="2024/11" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-cutting-notes.jpg"
+     url="https://github.com/alphaArgon/cutting-notes"
+     title="多行夹注"
+     meta="2019/9" %}
+
+{%  include work-ul-end.html %}
+
+
+{%  include work-ul-begin.html
+    title="Videos" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-core-cursor.jpg"
+     url="https://www.bilibili.com/video/BV1gzKGe4E6R"
+     title="Mac 等待光标 “风火轮” 小考"
+     meta="2025/2" %}
+
+ {%  include work-li-closed.html
+     img="images/portfolio-toggle-switch.jpg"
+     url="https://www.bilibili.com/video/BV1nb4y1D7An"
+     title="Apple 的 Toggle Switch"
+     meta="2021/10" %}
 
 {%  include work-ul-end.html %}
