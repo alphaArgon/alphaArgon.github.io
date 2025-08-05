@@ -16,6 +16,7 @@ let transpiled = transform({
     minify: true,
     targets: {
         safari: 11 << 16,
+        ios_saf: 11 << 16,
         chrome: 49 << 16,
         firefox: 52 << 16,
         edge: 15 << 16,

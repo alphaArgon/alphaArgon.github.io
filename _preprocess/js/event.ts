@@ -24,6 +24,8 @@ declare global {
 export interface HostedMouseEvent extends MouseEvent {
 
     readonly leafTarget: EventTarget;
+    /** @deprecated Always zero. */ readonly movementX: number;
+    /** @deprecated Always zero. */ readonly movementY: number;
 }
 
 
@@ -36,88 +38,153 @@ export function withDOMContentLoaded(callback: () => void): void {
 }
 
 
+/** Establishes an AppKit-like left mouse handling mechanism for the element. If the element doesn’t
+  * accept the mouse session, that is, explicitly pass the event to its nearest ancestor who also
+  * wants hosted mouse events, call `preventDefault` on the mouse down event. */
 export function setElementWantsHostedMouseEvents(element: HTMLElement, accept: boolean): void {
     accept ? hostedElements.add(element) : hostedElements.delete(element);
 }
 
 
 let hostedElements: WeakSet<HTMLElement> = new WeakSet();
-let activeHostedElement: HTMLElement | null = null;
+
+let activeHostedMouse: {
+    readonly element: HTMLElement,
+    readonly touchIdentifier: number | null,
+    lastEvent: HostedMouseEvent,
+} | null = null;
 
 
-window.addEventListener("mousedown", event => {
-    if (event.button !== 0) {return;}
-    if (activeHostedElement !== null && activeHostedElement.isConnected) {
-        releaseMouseWith(event);
+let nonpassive = {passive: false};
+
+window.addEventListener("mousedown", hostedMouseDown, nonpassive);
+window.addEventListener("touchstart", hostedMouseDown, nonpassive);
+
+
+function hostedMouseDown(event: MouseEvent | TouchEvent): void {
+    let touch: Touch | null;
+
+    if ("button" in event) {
+        if (event.button !== 0) {return;}
+        touch = null;
+    } else {
+        let touches = event.touches;
+        if (touches.length !== 1) {return;}
+        touch = touches[0];
     }
 
-    activeHostedElement = event.target as HTMLElement | null;
-    while (activeHostedElement !== null) {
-        if (hostedElements.has(activeHostedElement)) {
-            let hostedEvent = makeHostedEvent(event, "red.argon.mouseDown");
-            activeHostedElement.dispatchEvent(hostedEvent);
+    if (activeHostedMouse !== null && activeHostedMouse.element.isConnected) {
+        releaseMouseWith(null);
+    } else {
+        abortlMouseWith(event);
+    }
+
+    let element = event.target as HTMLElement | null;
+    while (element !== null) {
+        if (hostedElements.has(element)) {
+            let hostedEvent = touch === null
+                ? makeHostedEvent("red.argon.mouseDown", event as MouseEvent, null)
+                : makeHostedEvent("red.argon.mouseDown", event as TouchEvent, null, touch);
+            element.dispatchEvent(hostedEvent);
 
             if (!hostedEvent.defaultPrevented) {
+                activeHostedMouse = {
+                    element: element,
+                    touchIdentifier: touch === null ? null : touch.identifier,
+                    lastEvent: hostedEvent,
+                }
+
                 event.preventDefault();
                 event.stopPropagation();
-                window.addEventListener("mousemove", hostedMouseMove);
-                window.addEventListener("mouseup", hostedMouseUp);
+
+                window.addEventListener("mousemove", hostedMouseMove, nonpassive);
+                window.addEventListener("touchmove", hostedMouseMove, nonpassive);
+                window.addEventListener("mouseup", hostedMouseUp, nonpassive);
+                window.addEventListener("touchend", hostedMouseUp, nonpassive);
+                window.addEventListener("touchcancel", hostedMouseUp, nonpassive);
                 break;
             }
         }
-        activeHostedElement = activeHostedElement.parentElement;
+
+        element = element.parentElement;
     }
-});
+}
 
 
-function hostedMouseMove(event: MouseEvent): void {
-    if (activeHostedElement === null) {return;}
-    if (!activeHostedElement.isConnected) {
-        return cancelMouseWith(event);
+function hostedMouseMove(event: MouseEvent | TouchEvent): void {
+    if (activeHostedMouse === null) {return;}
+    if (!activeHostedMouse.element.isConnected) {
+        return abortlMouseWith(event);
     }
 
     event.preventDefault();
     event.stopPropagation();
 
-    if ((event.buttons & 1) === 0) {
-        releaseMouseWith(event);
+    if ("button" in event) {
+        if ((event.buttons & 1) === 0) {
+            releaseMouseWith(event);
+        } else {
+            let hostedEvent = makeHostedEvent("red.argon.mouseDragged", event, activeHostedMouse.lastEvent);
+            activeHostedMouse.element.dispatchEvent(hostedEvent);
+            activeHostedMouse.lastEvent = hostedEvent;
+        }
     } else {
-        let hostedEvent = makeHostedEvent(event, "red.argon.mouseDragged");
-        activeHostedElement.dispatchEvent(hostedEvent);
+        for (let touch of event.touches) {
+            if (touch.identifier !== activeHostedMouse.touchIdentifier) {continue;}
+            let hostedEvent = makeHostedEvent("red.argon.mouseDragged", event, activeHostedMouse.lastEvent, touch);
+            activeHostedMouse.element.dispatchEvent(hostedEvent);
+            activeHostedMouse.lastEvent = hostedEvent;
+            return;
+        }
+        releaseMouseWith(null);
     }
 }
 
 
-function hostedMouseUp(event: MouseEvent): void {
-    if (activeHostedElement === null) {return;}
-    if (!activeHostedElement.isConnected) {
-        return cancelMouseWith(event);
+function hostedMouseUp(event: MouseEvent | TouchEvent): void {
+    if (activeHostedMouse === null) {return;}
+    if (!activeHostedMouse.element.isConnected) {
+        return abortlMouseWith(event);
     }
 
     event.preventDefault();
     event.stopPropagation();
 
-    if ((event.buttons & 1) === 0) {
-        releaseMouseWith(event);
+    if ("button" in event) {
+        if ((event.buttons & 1) === 0) {
+            releaseMouseWith(event);
+        }
+    } else {
+        for (let touch of event.touches) {
+            if (touch.identifier === activeHostedMouse.touchIdentifier) {return;}
+        }
+        releaseMouseWith(null);
     }
 }
 
 
-function releaseMouseWith(event: MouseEvent) {
-    let hostedEvent = makeHostedEvent(event, "red.argon.mouseUp");
-    activeHostedElement!.dispatchEvent(hostedEvent);
-    cancelMouseWith(event);
+function releaseMouseWith(event: MouseEvent | null) {
+    let event_ = event === null ? activeHostedMouse!.lastEvent : event;
+    let hostedEvent = makeHostedEvent("red.argon.mouseUp", event_, activeHostedMouse!.lastEvent);
+    activeHostedMouse!.element.dispatchEvent(hostedEvent);
+    abortlMouseWith(event_);
 }
 
 
-function cancelMouseWith(event: MouseEvent) {
+function abortlMouseWith(event: MouseEvent | TouchEvent) {
     window.removeEventListener("mousemove", hostedMouseMove);
+    window.removeEventListener("touchmove", hostedMouseMove);
     window.removeEventListener("mouseup", hostedMouseUp);
-    activeHostedElement = null;
+    window.removeEventListener("touchend", hostedMouseUp);
+    window.removeEventListener("touchcancel", hostedMouseUp);
+    activeHostedMouse = null;
 }
 
 
-function makeHostedEvent(event: MouseEvent, type: string): HostedMouseEvent {
+function makeHostedEvent(type: string, event: MouseEvent, lastEvent: HostedMouseEvent | null): HostedMouseEvent;
+function makeHostedEvent(type: string, event: TouchEvent, lastEvent: HostedMouseEvent | null, touch: Touch): HostedMouseEvent;
+function makeHostedEvent(type: string, event: MouseEvent | TouchEvent, lastEvent: HostedMouseEvent | null, touch?: Touch): HostedMouseEvent {
+    let locationSource: MouseEvent | Touch = touch === undefined ? event as MouseEvent : touch;
     let hostedEvent = new MouseEvent(type, {
         cancelable: true,
         bubbles: false,
@@ -127,16 +194,16 @@ function makeHostedEvent(event: MouseEvent, type: string): HostedMouseEvent {
         metaKey: event.metaKey,
         shiftKey: event.shiftKey,
         button: 0,  //  always left mouse.
-        buttons: event.buttons,
-        clientX: event.clientX,
-        clientY: event.clientY,
-        movementX: event.movementX,
-        movementY: event.movementY,
-        screenX: event.screenX,
-        screenY: event.screenY,
-    }) as any;
+        buttons: type === "red.argon.mouseUp" ? 0 : 1,  //  always left mouse.
+        movementX: lastEvent === null ? 0 : locationSource.screenX - lastEvent.screenX,
+        movementY: lastEvent === null ? 0 : locationSource.screenY - lastEvent.screenY,
+        clientX: locationSource.clientX,
+        clientY: locationSource.clientY,
+        screenX: locationSource.screenX,
+        screenY: locationSource.screenY,
+    }) as HostedMouseEvent;
 
-    hostedEvent.leafTarget = event.target;
+    (hostedEvent as any).leafTarget = "leafTarget" in event ? event.leafTarget : event.target;
     return hostedEvent;
 }
 

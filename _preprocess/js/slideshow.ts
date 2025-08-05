@@ -115,29 +115,39 @@ class SlideshowContext {
             lastWheelTime = event.timeStamp;
         });
 
-        let mouseDownElement: HTMLElement | null = null;
+        let mouseDownAt: [number, number] | null = null;
         setElementWantsHostedMouseEvents(this.wrapper, true);
 
         this.wrapper.addEventListener("red.argon.mouseDown", event => {
-            mouseDownElement = null;
+            mouseDownAt = null;
 
             let first = true;
+            let canExit = true;
             let element = event.leafTarget as HTMLElement | null;
             while (element !== null && element !== this.root) {
                 let classList = element.classList;
                 if (classList.contains("slideshow-exit")) {break;}
-                if (classList.contains("slideshow-header")) {return;}
-                if (classList.contains("slideshow-scroller")) {return;}
-                if (!first && classList.contains("slideshow-body")) {return;}
+                if (classList.contains("slideshow-title")) {canExit = false; break;}
+                if (classList.contains("slideshow-meta")) {canExit = false; break;}
+                if (classList.contains("work-slide-image")) {canExit = false; break;}
+                if (classList.contains("slideshow-scroller")) {canExit = false; break;}
+                if (!first && classList.contains("work-slide-title")) {canExit = false; break;}
                 element = element.parentElement;
                 first = false;
             }
 
-            mouseDownElement = event.leafTarget as HTMLElement | null;
+            if (!canExit) {
+                event.preventDefault();
+            } else {
+                mouseDownAt = [event.screenX, event.screenY];
+            }
         });
 
         this.wrapper.addEventListener("red.argon.mouseUp", event => {
-            if (event.leafTarget === mouseDownElement) {
+            if (mouseDownAt === null) {return;}
+            
+            let [x, y] = [event.screenX, event.screenY];
+            if (Math.hypot(x - mouseDownAt[0], y - mouseDownAt[1]) < 4) {
                 if (this.endingAction !== null) {
                     this.endingAction();
                 }
@@ -201,13 +211,15 @@ class SlideshowContext {
             this.root.classList.add("out");
 
             this.requestedFrame = requestAnimationFrame(() => {
+                this.requestedFrame = null;
+
                 if (this.sourceImage !== null) {
                     this.transformWrapperTo(this.sourceImage);
                 }
 
-                this.requestedFrame = requestAnimationFrame(() => {
-                    this.requestedFrame = null;
-
+                //  Safari has a delay on <img> even if the resource is already loaded.
+                //  Therefore here we use `setTimeout` instead of `requestAnimationFrame`.
+                this.transitionTimer = setTimeout(() => {
                     this.root.classList.add("animating");
                     this.root.classList.remove("out");
                     this.transformWrapperTo(null);
@@ -220,14 +232,17 @@ class SlideshowContext {
                         this.transitionTimer = null;
                         this.root.classList.remove("animating");
                         this.visibility = Visibility.shown;
-                    }, fadeInDuration);
-                });
+                    }, fadeInDuration - 60);
+                }, 50);
             });
 
             break;
 
         case Visibility.showing:
         case Visibility.shown:
+            if (this.sourceImage !== null) {
+                this.sourceImage.style.visibility = "hidden";
+            }
             break;
         }
 

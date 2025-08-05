@@ -45,8 +45,8 @@ pclass: wide
 
   {%  include work-slide.html
       caption="重新思考反刻板的中文宋体，适用于标题"
-      img1="portfolio-bahyan-1.svg"
-      img1="portfolio-bahyan-2.svg" %}
+      img1="images/portfolio-bahyan-1.svg"
+      img2="images/portfolio-bahyan-2.svg" %}
 
   {%  include work-slide.html
       caption="白杨的前身——丁明——曾为<a href='https://mp.weixin.qq.com/s/k34aiYUQw-I2tq0ujXqI6Q'>活字攷古的节气图投稿</a>"
@@ -62,8 +62,8 @@ pclass: wide
 
   {%  include work-slide.html
       caption="Transitional 衬线体"
-      img1="portfolio-surfactant-1.svg"
-      img2="portfolio-surfactant-2.svg" %}
+      img1="images/portfolio-surfactant-1.svg"
+      img2="images/portfolio-surfactant-2.svg" %}
 
   {%  include work-slide.html
       caption="“Surfactant” 缩写自 surface active agent，即表面活性剂"
@@ -107,9 +107,9 @@ pclass: wide
 
   {%  include work-slide.html
       caption="Humanistic × Grotesque 的无衬线体"
-      img1="portfolio-argon-1.svg"
-      img2="portfolio-argon-2.svg"
-      img3="portfolio-argon-3.svg" %}
+      img1="images/portfolio-argon-1.svg"
+      img2="images/portfolio-argon-2.svg"
+      img3="images/portfolio-argon-3.svg" %}
 
   {%  include work-slide.html
       caption="在 <code>calt</code> 特性启用时，f 和 t 的横杠会微调以保证间距相同"

@@ -12,20 +12,23 @@ import { addWBRsToInlineCode } from "./wbr";
 import { beginSlideshow, endSlideshow } from "./slideshow";
 
 
-function beginSlideshowForHash(animated: boolean): boolean {
-    let anchor = document.querySelector(`a[href="${location.hash}"]`);
+window.addEventListener("red.argon.pageLayout", sizeMainContent);
+
+
+function beginSlideshowForHash(hash: string, animated: boolean): boolean {
+    let anchor = document.querySelector(`a[href="${hash}"]`);
     if (anchor === null) {return false;}
 
-    let body = document.querySelector(`[data-slideshow-for="${location.hash}"]`);
+    let body = document.querySelector(`[data-slideshow-for="${hash}"]`);
     if (body === null) {return false;}
 
-    beginSlideshow(anchor, body, animated, resetHash);
+    beginSlideshow(anchor, body, animated, userExitSlideshow);
     return true;
 }
 
 
 withDOMContentLoaded(() => {
-    beginSlideshowForHash(false);
+    beginSlideshowForHash(location.hash, false);
 
     let main = document.querySelector(".main");
     if (main !== null) {
@@ -34,29 +37,57 @@ withDOMContentLoaded(() => {
 });
 
 
-window.addEventListener("red.argon.pageLayout", sizeMainContent);
-
-
-let prevURLHasHash = false;
-
-window.addEventListener("hashchange", event => {
-    if (beginSlideshowForHash(true)) {
-        prevURLHasHash = event.oldURL.includes("#");
-    } else {
+window.addEventListener("hashchange", () => {
+    if (!beginSlideshowForHash(location.hash, true)) {
         endSlideshow(true);
     }
 });
 
 
-function resetHash() {
+window.addEventListener("click", event => {
+    let element = event.target as HTMLElement | null;
+    while (element !== null && element.tagName !== "A") {
+        element = element.parentElement;
+    }
+
+    if (element === null) {return;}
+
+    //  On mobile browsers `hashchange` will trigger the location bar showing.
+    let href = element.getAttribute("href");
+    if (href !== null && href[0] === '#' && beginSlideshowForHash(href, true)) {
+        event.preventDefault();
+        let hasHash = location.href.includes('#');
+        let full = (element as HTMLAnchorElement).href;
+        history.pushState({isPrevURLBare: !hasHash}, "", full);
+    }
+});
+
+
+function userExitSlideshow() {
     let url = location.href;
     let index = url.indexOf("#");
     if (index === -1) {return;}
 
-    if (prevURLHasHash) {
-        history.pushState(history.state, "", url.substring(0, index));
-    } else {
+    if (history.state && history.state.isPrevURLBare) {
+        let {scrollTop, scrollLeft} = document.documentElement;
         history.back();
+
+        doAndDo(() => {
+            document.documentElement.scrollTo({
+                top: scrollTop,
+                left: scrollLeft,
+                behavior: "instant",
+            });
+        });
+
+    } else {
+        history.pushState({isPrevURLBare: false}, "", url.substring(0, index));
     }
-    prevURLHasHash = false;
+}
+
+
+function doAndDo(body: () => void) {
+    body();
+    requestAnimationFrame(body);
+    setTimeout(body, 0);
 }

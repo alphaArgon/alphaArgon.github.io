@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="theme-color" content="#834">
-    <meta name="color-scheme" content="light dark">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}"/>
-    <script src="{{ '/assets/style.js' | relative_url }}"></script>
-    <title>
-{%- if page.title and page.tabtitle != "" -%}
-        {{ page.tabtitle | default: page.title | escape }} @ {{ site.title | escape }}
-{%- else -%}
-        {{ site.title | escape }}
-{%- endif -%}
-    </title>
-    <meta property="og:site_name" content="{{ site.title | escape }}">
-    <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
-{%- assign url_components = page.url | split: '/' -%}
-{%- if url_components[1] == "posts" and url_components[2] -%}
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="{{ page.url | absolute_url }}">
-    <meta property="og:description" content="{{ page.excerpt | escape }}">
-    {%- if page.cover -%}
-    <meta property="og:image" content="{{ page.cover | absolute_url }}">
-    {%- endif -%}
-{%- endif -%}
-</head>
 {%- assign is_root_page = false -%}
 {%- capture site_badge -%}
     {%- case page.url -%}
@@ -41,6 +13,34 @@
         <a class="site-badge" href="{{ updir | relative_url }}" rel="up" translate="no">{{ site.title }}</a>
     {%- endcase -%}
 {%- endcapture -%}
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#834">
+    <meta name="color-scheme" content="light dark">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}"/>
+    <script src="{{ '/assets/style.js' | relative_url }}"></script>
+    <title>
+{%- if is_root_page -%}
+        {{ site.title | escape }}
+{%- else -%}
+        {{ page.tabtitle | default: page.title | escape }} @ {{ site.title | escape }}
+{%- endif -%}
+    </title>
+    <meta property="og:site_name" content="{{ site.title | escape }}">
+    <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
+{%- assign url_components = page.url | split: '/' -%}
+{%- if url_components[1] == "posts" and url_components[2] -%}
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:description" content="{{ page.excerpt | escape }}">
+    {%- if page.cover -%}
+    <meta property="og:image" content="{{ page.cover | absolute_url }}">
+    {%- endif -%}
+{%- endif -%}
+</head>
 <body ontouchstart>
     <div class="sidebar-background"></div>
     <nav class="site-nav">
