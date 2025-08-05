@@ -637,7 +637,7 @@ body {
     }
 
     .slideshow.out.animating & {
-        transition: 0.15s 0.2s;
+        transition: 0.25s 0.2s, filter 0.35s 0.1s;
     }
 }
 
@@ -662,7 +662,7 @@ body {
     }
 
     .slideshow.out.animating & {
-        transition: 0.15s 0.15s, visibility 0.35s;
+        transition: 0.25s 0.1s, visibility 0.35s;
     }
 }
 
@@ -1147,6 +1147,26 @@ a.footnote-backref {
             background-position: 32px 0;
             --transform-base: scaleY(-1) rotate(250deg);
         }
+    }
+}
+
+@media (max-height: 540px) {
+
+    .slideshow {
+        --slide-size: min(384px, 85vw, 85vh - 6rem);
+    }
+
+    .slideshow-body,
+    .slideshow-transimage {
+        top: calc(50% - var(--slide-size) / 2 - 2rem);
+    }
+
+    .slideshow-scroller {
+        bottom: calc(50% - var(--slide-size) / 2 - 16px + 2rem);
+    }
+
+    .slideshow-header {
+        display: none;
     }
 }
 
