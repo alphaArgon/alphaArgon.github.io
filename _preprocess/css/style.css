@@ -853,6 +853,7 @@ body {
 
 .footnote-ref {
     vertical-align: baseline;
+    white-space: nowrap;
 }
 
 .footnote-ref > a,
