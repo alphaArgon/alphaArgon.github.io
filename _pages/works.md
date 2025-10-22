@@ -153,7 +153,7 @@ pclass: wide
  {%  include work-li-closed.html
      img="images/portfolio-prism.jpg"
      url="https://github.com/alphaArgon/Prism"
-     title="Minesweeper"
+     title="Prism"
      meta="2020/10" %}
 
 {%  include work-ul-end.html %}
@@ -164,7 +164,7 @@ pclass: wide
 
  {%  include work-li-closed.html
      img="images/portfolio-cocoa-dom.jpg"
-     url="https://github.com/alphaArgon/CocoaDOM"
+     url="https://argon.red/cocoa-dom/demo"
      title="Cocoa DOM"
      meta="2024/11" %}
 
