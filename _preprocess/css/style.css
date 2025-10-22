@@ -9,7 +9,7 @@
 
 @font-face {
     font-family: "Antimony";
-    src: url("/assets/Antimony-Regular.woff2") format("woff2") url("/assets/Antimony-Regular.woff") format("woff");
+    src: url("/assets/Antimony-Regular.woff2") format("woff2"), url("/assets/Antimony-Regular.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -17,7 +17,7 @@
 
 @font-face {
     font-family: "Antimony";
-    src: url("/assets/Antimony-Italic.woff2") format("woff2") url("/assets/Antimony-Italic.woff") format("woff");
+    src: url("/assets/Antimony-Italic.woff2") format("woff2"), url("/assets/Antimony-Italic.woff") format("woff");
     font-weight: normal;
     font-style: italic;
     font-display: swap;
@@ -25,7 +25,7 @@
 
 @font-face {
     font-family: "Antimony";
-    src: url("/assets/Antimony-Bold.woff2") format("woff2") url("/assets/Antimony-Bold.woff") format("woff");
+    src: url("/assets/Antimony-Bold.woff2") format("woff2"), url("/assets/Antimony-Bold.woff") format("woff");
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -33,7 +33,7 @@
 
 @font-face {
     font-family: "Antimony";
-    src: url("/assets/Antimony-BoldItalic.woff2") format("woff2") url("/assets/Antimony-BoldItalic.woff") format("woff");
+    src: url("/assets/Antimony-BoldItalic.woff2") format("woff2"), url("/assets/Antimony-BoldItalic.woff") format("woff");
     font-weight: bold;
     font-style: italic;
     font-display: swap;
@@ -87,7 +87,8 @@
 :root {
     --underline-color: currentColor;
     font: 16px/1.75 "Antimony", "Lucida Grande", "Lucida Sans", "Verdana", sans-serif;
-    font-feature-settings: "calt", "ss01";
+    font-feature-settings: "cv01", "calt", "kern";
+    font-kerning: normal;
     color: var(--text-color);
     word-break: break-word;
     -webkit-tap-highlight-color: transparent;
@@ -438,7 +439,7 @@ body {
 
 .page-meta > :nth-child(n + 2)::before {
     content: " · ";
-    font-feature-settings: 'case';
+    font-feature-settings: "case";
 }
 
 .page-banner-image {
@@ -868,6 +869,11 @@ body {
 .footnote-ref {
     vertical-align: baseline;
     white-space: nowrap;
+    
+    &::before {
+        content: "\a0";
+        font-size: 0;
+    }
 }
 
 .footnote-ref > a,
