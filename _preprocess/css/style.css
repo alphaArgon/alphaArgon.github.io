@@ -1,29 +1,42 @@
-@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@350&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@700&display=swap");
+/*
+ *  _preprocess/css/style.css
+ *  alphaArgon.github.io
+ *
+ *  Created by alpha on 2025/10/22.
+ *  Copyright © 2025 alphaArgon.
+ */
+
 
 @font-face {
-    /*  The space of Merriweather Sans is too narrow  */
-    font-family: "Merriweather Sans";
-    src: local("Trebuchet MS");
-    font-weight: 350;
-    unicode-range: U+0020;
+    font-family: "Antimony";
+    src: url("/assets/Antimony-Regular.woff2") format("woff2") url("/assets/Antimony-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-    /*  The space of Merriweather Sans is too narrow  */
-    font-family: "Merriweather Sans";
-    src: local("Trebuchet MS");
-    font-weight: 700;
-    unicode-range: U+0020;
+    font-family: "Antimony";
+    src: url("/assets/Antimony-Italic.woff2") format("woff2") url("/assets/Antimony-Italic.woff") format("woff");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
 }
 
 @font-face {
-    /*  A font to control the line height and display bullet hyphens  */
-    font-family: leading;
+    font-family: "Antimony";
+    src: url("/assets/Antimony-Bold.woff2") format("woff2") url("/assets/Antimony-Bold.woff") format("woff");
     font-weight: bold;
-    /*  A font that lacks essential characters may break Safari translation. I don’t know why.  */
-    src: url("data:font/sfnt;base64,AAEAAAAKAIAAAwAgT1MvMmDQlNoAAAEoAAAAVmNtYXAAQiCuAAABkAAAADxnbHlmHB6YKwAAAdgAAAAaaGVhZCqLMIsAAACsAAAANmhoZWEMQgQFAAAA5AAAACRobXR4CQAAgAAAAYAAAAAQbG9jYQANAAAAAAHMAAAACm1heHACEAAFAAABCAAAACBuYW1lAY4WCAAAAfQAAABQcG9zdP8DAIAAAAJEAAAAIAABAAAAAQAAJj9qL18PPPUAAwgAAAAAAOMvzOgAAAAA40UZaACAAkAEgAMAAAAABgACAAAAAAAAAAEAAAdA/oAAAAUAAIAAgASAAAEAAAAAAAAAAAAAAAAAAAAEAAEAAAAEAAQAAQAAAAAAAQAAAAAACgAAAgAAAAAAAAAAAQUAAZAABQAABAAEAAAAAQAEAAQAAAADAACAAwAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAQVJHTgAAACAgQwdA/oAAAAdAAYAgAAAPAAAAAAAAAgAAAAAAAAACAAAABQAAgAAAAAEAAwABAAAADAAEADAAAAAIAAgAAgAAACAALSBD//8AAAAgAC0gQ////+L/1t/AAAEAAAAAAAAAAAAAAAAAAAAAAA0AAAABAIACQASAAwAAAwAAEyEVIYAEAPwAAwDAAAAAAAAFAEIAAwABBAkAAQAAAAAAAwABBAkAAgAAAAAAAwABBAkAAwAOAAAAAwABBAkABAAOAAAAAwABBAkABgAOAAAAbABlAGEAZABpAG4AZwADAAAAAAAA/wAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    unicode-range: U+2043;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Antimony";
+    src: url("/assets/Antimony-BoldItalic.woff2") format("woff2") url("/assets/Antimony-BoldItalic.woff") format("woff");
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
 }
 
 :root {
@@ -73,7 +86,8 @@
 
 :root {
     --underline-color: currentColor;
-    font: 16px/1.75 leading, "Lucida Grande", "Lucida Sans", "Merriweather Sans", "Segoe UI", "Verdana", sans-serif;
+    font: 16px/1.75 "Antimony", "Lucida Grande", "Lucida Sans", "Verdana", sans-serif;
+    font-feature-settings: "calt", "ss01";
     color: var(--text-color);
     word-break: break-word;
     -webkit-tap-highlight-color: transparent;
