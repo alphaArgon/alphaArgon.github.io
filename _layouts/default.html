@@ -84,6 +84,7 @@
                     </time>
         {%- endif -%}
         {%- if page.source -%}
+            {%- assign space_before = "" -%}
             {%- assign short_name = page.source | split: "//" | last | split: "/" | first -%}
             {%- assign first_four = short_name | slice: 0, 4 -%}
             {%- if first_four == "www." -%}
@@ -91,7 +92,8 @@
                 {%- assign short_name = short_name | slice: 4, slice_length -%}
             {%- endif -%}
             {%- if short_name contains "github.com" -%}
-                {%- assign short_name = " GitHub" -%}
+                {%- assign space_before = " " -%}
+                {%- assign short_name = "GitHub" -%}
             {%- elsif short_name contains "zhihu.com" -%}
                 {%- assign short_name = "知乎" -%}
             {%- elsif short_name contains "bilibili.com" -%}
@@ -101,9 +103,10 @@
             {%- elsif short_name contains "weixin.qq.com" -%}
                 {%- assign short_name = "微信公众号" -%}
             {%- else -%}
-                {%- assign short_name = short_name | prepend: " " -%}
+                {%- assign space_before = " " -%}
+                {%- assign short_name = short_name -%}
             {%- endif -%}
-                    <span>最初发布于<a href="{{ page.source }}" target="_blank" rel="noopener noreferrer">{{ short_name }}</a></span>
+                    <span>最初发布于{{ space_before }}<a href="{{ page.source }}" target="_blank" rel="noopener noreferrer">{{ short_name }}</a></span>
         {%- endif -%}
                 </div>
     {%- endif -%}

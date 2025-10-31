@@ -11,6 +11,7 @@ import { sizeMainContent } from "./layout";
 import { addWBRsToInlineCode } from "./wbr";
 import { beginSlideshow, endSlideshow } from "./slideshow";
 import { spacePuncInElement } from "./punctuation";
+import { makeProperUnderlines } from "./underline";
 
 
 window.addEventListener("red.argon.pageLayout", sizeMainContent);
@@ -30,6 +31,7 @@ function beginSlideshowForHash(hash: string, animated: boolean): boolean {
 
 withDOMContentLoaded(() => {
     spacePuncInElement(document.body);
+    makeProperUnderlines(document.body);
     beginSlideshowForHash(location.hash, false);
 
     let main = document.querySelector(".main");

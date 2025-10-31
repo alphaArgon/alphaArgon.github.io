@@ -57,6 +57,13 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "Caesium Web";
+    src: url("/assets/CaesiumWeb-Regular.woff2") format("woff2"), url("/assets/CaesiumWeb-Regular.woff") format("woff");
+    font-weight: bold;
+    font-display: swap;
+}
+
 :root {
     --on-dark-text-color: #fff;
     --dark-accent-background-color: #834;
@@ -224,10 +231,9 @@ blockquote {
 }
 
 pre, code {
-    /*  Monospace font looks larger  */
     font-size: 93.75%;
-    font-family: "Lucida Sans Typewriter", "Lucida Console", "Menlo", "DejaVu Sans Mono", "Consolas", monospace;
-    line-height: 1.4666666666;
+    font-family: "Caesium Web", monospace;
+    line-height: 1.4;
     -webkit-hyphens: none;
     hyphens: none;
 }
@@ -275,9 +281,19 @@ td {
     border-bottom: 1pt solid var(--border-color);
 }
 
-:any-link, u, .underline {
-    box-shadow: var(--underline-color) 0 2px 0 -1px;
-    text-decoration: none;
+:any-link, u {
+    text-decoration-thickness: 0.0625em;
+    text-underline-offset: 0.125em;
+}
+
+:any-link:lang(zh), :any-link:lang(ja),
+u:lang(zh), u:lang(ja) {
+    text-underline-offset: 0.25em;
+}
+
+:any-link.latin-underline,
+u.latin-underline {
+    text-underline-offset: 0.125em;
 }
 
 a:any-link {
@@ -317,7 +333,7 @@ body {
     padding: 0;
 
     & a {
-        box-shadow: none;
+        text-decoration: none;
         color: inherit;
     }
 }
@@ -411,7 +427,7 @@ body {
         padding-bottom: 0.25em;
         padding-right: 0.5em;
         border-bottom: solid 1px var(--border-color);
-        box-shadow: none;
+        text-decoration: none;
         color: var(--dimmed-text-color);
     }
 }
@@ -505,7 +521,7 @@ body {
 .post-list-item > a,
 .work-list-item > a {
     display: block;
-    box-shadow: none;
+    text-decoration: none;
     color: inherit;
 }
 
@@ -915,7 +931,7 @@ body {
 
 .footnote-ref > a,
 a.footnote-backref {
-    box-shadow: none;
+    text-decoration: none;
     color: var(--accent-text-color);
 }
 
@@ -1281,6 +1297,7 @@ a.footnote-backref {
     .kt /* Type */,
     .kv /* Variable */ {
         color: var(--sh-keyword-color);
+        font-feature-settings: "bold";
         font-weight: bold;
     }
 
@@ -1327,6 +1344,7 @@ a.footnote-backref {
     &.language-swift .kt  {
         /* Swift types are not keywords */
         color: var(--sh-key-type-color);
+        font-feature-settings: inherit;
         font-weight: inherit;
     }
 
