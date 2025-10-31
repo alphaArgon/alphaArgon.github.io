@@ -13,6 +13,7 @@
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+    font-feature-settings: "cv01";
 }
 
 @font-face {
@@ -21,6 +22,7 @@
     font-weight: normal;
     font-style: italic;
     font-display: swap;
+    font-feature-settings: "cv01";
 }
 
 @font-face {
@@ -29,6 +31,7 @@
     font-weight: bold;
     font-style: normal;
     font-display: swap;
+    font-feature-settings: "cv01";
 }
 
 @font-face {
@@ -36,6 +39,21 @@
     src: url("/assets/Antimony-BoldItalic.woff2") format("woff2"), url("/assets/Antimony-BoldItalic.woff") format("woff");
     font-weight: bold;
     font-style: italic;
+    font-display: swap;
+    font-feature-settings: "cv01";
+}
+
+@font-face {
+    font-family: "Punctuation";
+    src: url("/assets/AntimonyCJKSymbols-Regular.woff2") format("woff2"), url("/assets/AntimonyCJKSymbols-Regular.woff") format("woff");
+    font-weight: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Punctuation";
+    src: url("/assets/AntimonyCJKSymbols-Bold.woff2") format("woff2"), url("/assets/AntimonyCJKSymbols-Bold.woff") format("woff");
+    font-weight: normal;
     font-display: swap;
 }
 
@@ -86,9 +104,7 @@
 
 :root {
     --underline-color: currentColor;
-    font: 16px/1.75 "Antimony", "Lucida Grande", "Lucida Sans", "Verdana", sans-serif;
-    font-feature-settings: "cv01", "calt", "kern";
-    font-kerning: normal;
+    font: 16px/1.75 "Antimony", "Punctuation", "Lucida Grande", "Lucida Sans", "Verdana", sans-serif;
     color: var(--text-color);
     word-break: break-word;
     -webkit-tap-highlight-color: transparent;
@@ -96,15 +112,17 @@
     text-size-adjust: none;
 }
 
-html {
-    scroll-padding-top: 30vh;
-    scroll-padding-bottom: 40vh;
+html:not(:active) {
+    scroll-padding-top: 25vh;
+    scroll-padding-bottom: 25vh;
     scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
     padding: 0;
+    font-feature-settings: "calt", "kern";
+    font-kerning: normal;
 }
 
 p, ul, ol, blockquote, figure, pre, table {
@@ -207,9 +225,9 @@ blockquote {
 
 pre, code {
     /*  Monospace font looks larger  */
-    font-size: 87.5%;
+    font-size: 93.75%;
     font-family: "Lucida Sans Typewriter", "Lucida Console", "Menlo", "DejaVu Sans Mono", "Consolas", monospace;
-    line-height: 1.5714285714;
+    line-height: 1.4666666666;
     -webkit-hyphens: none;
     hyphens: none;
 }
@@ -218,14 +236,12 @@ pre pre,
 pre code {
     /* Monospace inside monospace */
     font-size: 100%;
-    padding: 0;
-    background-color: transparent;
     overflow: visible;
     white-space: pre;
 }
 
 pre {
-    padding: 0.8571428571em 1.1428571429em;
+    padding: 0.8em 1.06666666666em;
     background-color: var(--secondary-background-color);
     word-break: normal;  /*  Not setting it may cause wrapping on Safari 13.  */
     position: relative;  /*  A workaround for the following issue  */
@@ -236,8 +252,6 @@ pre {
 }
 
 code {
-    padding: 0.2em 0.4em;
-    background-color: var(--secondary-background-color);
     white-space: pre-wrap;
     white-space: break-spaces;
 }
@@ -847,6 +861,26 @@ body {
     margin-bottom: 1em;
 }
 
+.footnotes ol {
+    margin-left: 1rem;
+    padding-left: 0;
+}
+
+.footnotes li[ref-tag] {
+    list-style-type: none;
+    
+    &::before {
+        content: attr(ref-tag);
+        font-size: 1rem;
+        font-feature-settings: "sups";
+        float: left;
+        width: 1em;
+        margin-left: -1.5em;
+        text-align: right;
+        color: var(--accent-text-color);
+    }
+}
+
 .footnotes.all-sidenotes {
     position: absolute;
     top: 0;
@@ -869,7 +903,10 @@ body {
 .footnote-ref {
     vertical-align: baseline;
     white-space: nowrap;
-    
+    font-size: inherit;
+    padding: 0 0.1em;
+    font-feature-settings: "sups";
+
     &::before {
         content: "\a0";
         font-size: 0;
@@ -888,8 +925,6 @@ a.footnote-backref {
 
 .footnote-ref > a {
     display: inline-block;
-    vertical-align: super;
-    margin: -0.5em 0;
 }
 
 .sidenote {
@@ -1188,6 +1223,22 @@ a.footnote-backref {
 
     .slideshow-header {
         display: none;
+    }
+}
+
+/*  Punctuation Spacing  */
+
+.cjk-punc {
+    font-family: "Punctuation";
+
+    &.hwid {
+        font-feature-settings: "hwid", "halt";
+        text-spacing-trim: space-all;
+    }
+
+    &.space-before::before,
+    &.space-after::after {
+        content: " ";
     }
 }
 

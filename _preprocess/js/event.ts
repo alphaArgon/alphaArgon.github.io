@@ -1,5 +1,5 @@
 /*
- *  _preprocess/sources/event.ts
+ *  _preprocess/js/event.ts
  *  alphaArgon.github.io
  *
  *  Created by alpha on 2025/7/31.

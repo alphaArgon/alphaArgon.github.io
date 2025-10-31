@@ -1,5 +1,5 @@
 /*
- *  _preprocess/sources/scroller.ts
+ *  _preprocess/js/scroller.ts
  *  alphaArgon.github.io
  *
  *  Created by alpha on 2025/7/31.

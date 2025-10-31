@@ -1,5 +1,5 @@
 /*
- *  _preprocess/sources/slideshow.ts
+ *  _preprocess/js/slideshow.ts
  *  alphaArgon.github.io
  *
  *  Created by alpha on 2025/7/31.

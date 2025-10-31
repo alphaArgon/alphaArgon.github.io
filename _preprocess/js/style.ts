@@ -1,5 +1,5 @@
 /*
- *  _preprocess/sources/works.ts
+ *  _preprocess/js/works.ts
  *  alphaArgon.github.io
  *
  *  Created by alpha on 2025/7/30.
@@ -10,6 +10,7 @@ import { withDOMContentLoaded } from "./event";
 import { sizeMainContent } from "./layout";
 import { addWBRsToInlineCode } from "./wbr";
 import { beginSlideshow, endSlideshow } from "./slideshow";
+import { spacePuncInElement } from "./punctuation";
 
 
 window.addEventListener("red.argon.pageLayout", sizeMainContent);
@@ -28,6 +29,7 @@ function beginSlideshowForHash(hash: string, animated: boolean): boolean {
 
 
 withDOMContentLoaded(() => {
+    spacePuncInElement(document.body);
     beginSlideshowForHash(location.hash, false);
 
     let main = document.querySelector(".main");

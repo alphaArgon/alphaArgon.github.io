@@ -1,5 +1,5 @@
 /*
- *  _preprocess/sources/wbr.ts
+ *  _preprocess/js/wbr.ts
  *  alphaArgon.github.io
  *
  *  Created by alpha on 2025/8/1.

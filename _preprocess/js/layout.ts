@@ -1,5 +1,5 @@
 /*
- *  _preprocess/sources/width.ts
+ *  _preprocess/js/width.ts
  *  alphaArgon.github.io
  *
  *  Created by alpha on 2025/8/2.
@@ -13,6 +13,7 @@ let chevron: HTMLElement | null = null;
 let flies: NodeListOf<HTMLElement> | null = null;
 
 withDOMContentLoaded(() => {
+    loadNoteRefTags();
     chevron = document.querySelector(".hero-chevron-up");
     flies = document.querySelectorAll(".nav-list .fly");
     if (chevron !== null) {
@@ -156,5 +157,16 @@ function positionNotes(rootWidth: number, mainRight: number, fontSize: number) {
         li.style.left = sideLeft + "px";
         li.style.width = sideWidth + "px";
         lastBottom = top + li.offsetHeight;
+    }
+}
+
+
+function loadNoteRefTags() {
+    for (let anchor of document.querySelectorAll(`a[id^="fnref"][href^="#fn"]`)) {
+        let id = anchor.getAttribute("href")!.substring(1);
+        let li = document.getElementById(id);
+        if (li !== null) {
+            li.setAttribute("ref-tag", (anchor as HTMLElement).innerText);
+        }
     }
 }
