@@ -53,7 +53,7 @@
 @font-face {
     font-family: "Punctuation";
     src: url("/assets/AntimonyCJKSymbols-Bold.woff2") format("woff2"), url("/assets/AntimonyCJKSymbols-Bold.woff") format("woff");
-    font-weight: normal;
+    font-weight: bold;
     font-display: swap;
 }
 

@@ -27,104 +27,129 @@ const boundaryTags: Set<string> = new Set([
 ]);
 
 
-type InOut<T> = {inout: T};
+type PuncState = {
+    type: number;
+    span: HTMLSpanElement | null;
+}
 
 
-export function spacePuncInElement(element: Element, prevEndsWithClose?: InOut<boolean>) {
-    if (prevEndsWithClose === undefined) {
-        prevEndsWithClose = {inout: false};
+function makePuncState(): PuncState {
+    return {type: 0, span: null};
+}
+
+
+function clearPuncState(state: PuncState) {
+    state.type = 0;
+    state.span = null;
+}
+
+
+export function spacePuncInElement(element: Element, prevEnd?: PuncState) {
+    if (prevEnd === undefined) {
+        prevEnd = makePuncState();
     }
 
     if (skipTags.has(element.tagName) || element.classList.contains("cjk-punc")) {
-        prevEndsWithClose.inout = false;
+        clearPuncState(prevEnd);
         return;
     }
 
     if (boundaryTags.has(element.tagName)) {
-        prevEndsWithClose.inout = false;
+        clearPuncState(prevEnd);
     }
 
-    spacePuncInNode(element, prevEndsWithClose);
+    spacePuncInNode(element, prevEnd);
 }
 
 
-function spacePuncInNode(node: Node, prevEndsWithClose: InOut<boolean>) {
+function spacePuncInNode(node: Node, prevEnd: PuncState) {
     for (let i = 0; i < node.childNodes.length; ++i) {
         let child = node.childNodes[i];
 
         switch (child.nodeType) {
+        case Node.ELEMENT_NODE:
+            spacePuncInElement(child as Element, prevEnd);
+            break;
+
         case Node.TEXT_NODE:
-            let fragment = splitNodeText((child as Text).data, prevEndsWithClose);
+            let fragment = splitNodeText((child as Text).data, prevEnd);
             if (fragment !== null) {
                 i += fragment.childNodes.length - 1;
                 node.replaceChild(fragment, child);
             }
             break;
 
-        case Node.ELEMENT_NODE:
-            spacePuncInElement(child as Element, prevEndsWithClose);
-            break;
-
         default:
-            prevEndsWithClose.inout = false;
             break;
         }
     }
 }
 
 
-function splitNodeText(text: string, prevEndsWithClose: InOut<boolean>): DocumentFragment | null {
+function splitNodeText(text: string, prevEnd: PuncState): DocumentFragment | null {
     if (text.length === 0) {return null;}
-
-    let spaceFirstOpen = prevEndsWithClose.inout;
-    prevEndsWithClose.inout = false;
 
     let lastIndex = 0;
     gPuncCluster.lastIndex = 0;
 
     let found: RegExpExecArray | null = null;
     let fragment: DocumentFragment | null = null;
+    let endsWithPunc = false;
 
     while ((found = gPuncCluster.exec(text)) !== null) {
-        let atFirstPunc = false;
-
         if (fragment === null) {
             fragment = document.createDocumentFragment();
-            atFirstPunc = true;
         }
 
         let cluster = found[0];
         let clusterStart = gPuncCluster.lastIndex - cluster.length;
         if (lastIndex !== clusterStart) {
             fragment.append(text.substring(lastIndex, clusterStart));
-            atFirstPunc = false;
         }
 
         let span = document.createElement("span");
         span.textContent = cluster;
         span.classList.add("cjk-punc");
 
-        if (openPunc.test(cluster)) {
-            span.classList.add("hwid");
-            if (!atFirstPunc || spaceFirstOpen) {
-                span.classList.add("space-before");
-            }
-        } else if (closePunc.test(cluster)) {
-            span.classList.add("hwid");
-            if (gPuncCluster.lastIndex !== text.length) {
-                span.classList.add("space-after");
-            } else {
-                prevEndsWithClose.inout = true;
-            }
+        let type = openPunc.test(cluster) ? 1
+            : closePunc.test(cluster) ? -1 : 0;
+
+        switch (type) {
+        case 1: span.classList.add("hwid", "space-before"); break;
+        case -1: span.classList.add("hwid", "space-after"); break;
+        default: break;
+        }
+
+        if (!fragment.hasChildNodes()) {
+            joinPunc(prevEnd, type, span);
         }
 
         fragment.append(span);
         lastIndex = gPuncCluster.lastIndex;
+
+        if (lastIndex === text.length) {
+            endsWithPunc = true;
+            prevEnd.type = type;
+            prevEnd.span = span;
+        }
     }
 
     if (fragment !== null && lastIndex !== text.length) {
         fragment.append(text.substring(lastIndex));
     }
+    
+    if (!endsWithPunc) {
+        clearPuncState(prevEnd);
+    }
 
     return fragment;
+}
+
+
+function joinPunc(prevEnd: PuncState, type: number, span: HTMLElement) {
+    if (type === -1 && prevEnd.type === -1) {
+        prevEnd.span!.classList.remove("space-after");
+    } else if (type === 1 && prevEnd.type === 1) {
+        span.classList.remove("space-before");
+    }
 }
