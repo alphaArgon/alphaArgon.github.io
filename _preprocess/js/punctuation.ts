@@ -135,11 +135,6 @@ function splitNodeText(text: string, prevEnd: PuncState, lang: QuickLang): Docum
     let found: RegExpExecArray | null = null;
     let fragment: DocumentFragment | null = null;
 
-    //  When to check consecutive?
-    //    1) At beginning if punc,
-    //    2) at open quote, or
-    //    3) after close quote.
-    let checkConsecutive = false;
     let pairingQuotes = false;
 
     while ((found = tester.exec(text)) !== null) {
@@ -183,17 +178,12 @@ function splitNodeText(text: string, prevEnd: PuncState, lang: QuickLang): Docum
         }
 
         if (lastIndex !== clusterStart) {
-            checkConsecutive = false;
-
             fragment.append(text.substring(lastIndex, clusterStart));
             if (prevEnd.type === -1 && text[lastIndex] === ' ') {
                 prevEnd.span!.classList.remove("space-after");
             }
 
             clearPuncState(prevEnd);
-
-        } else if (isOpenQuote) {
-            checkConsecutive = true;
         }
 
         let type = (isOpenQuote || anyOpen.test(cluster)) ? 1
@@ -212,7 +202,7 @@ function splitNodeText(text: string, prevEnd: PuncState, lang: QuickLang): Docum
             if (firstChar !== ' ') {
                 span.classList.add("space-before");
             }
-            if (checkConsecutive && prevEnd.type === 1) {
+            if (prevEnd.type === 1) {
                 span.classList.remove("space-before");
             }
             break;
@@ -221,7 +211,7 @@ function splitNodeText(text: string, prevEnd: PuncState, lang: QuickLang): Docum
             if (lastChar !== ' ') {
                 span.classList.add("space-after");
             }
-            if (checkConsecutive && prevEnd.type === -1) {
+            if (prevEnd.type === -1) {
                 prevEnd.span!.classList.remove("space-after");
             }
             break;
@@ -230,10 +220,6 @@ function splitNodeText(text: string, prevEnd: PuncState, lang: QuickLang): Docum
         }
 
         pairingQuotes = isOpenQuote;
-
-        if (isCloseQuote) {
-            checkConsecutive = true;
-        }
 
         fragment.append(span);
         prevEnd.type = type;

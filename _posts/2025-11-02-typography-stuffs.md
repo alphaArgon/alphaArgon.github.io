@@ -1,6 +1,7 @@
 ---
 title: 些许字体排印 & Typography Stuffs
-excerpt: 我的项目中出现的另类的字体排印。The article will be written bilingually, each language corresponding to the typography of that script.
+cover: images/typography-stuffs-banner.png
+excerpt: 我的项目中出现的另类的字体排印。This article will be written bilingually, each language corresponding to the typography of that script.
 revision: 2025-11-02
 ---
 
@@ -32,7 +33,7 @@ For consecutive *s*’s, Antimony doesn’t apply special rules either. But I ha
 [^ss-decomposition]: Fun fact: Spotlight on Mac normalizes *ß* to *ss*. That’s even beyond Unicode NFKD.
 
 {%  include figure.html
-    img="typography-stuffs-triple-s.svg"
+    img="images/typography-stuffs-triple-s.svg"
     caption="Ligature of <i>ßs</i>"  %}
 
 Many sans-serif fonts don’t attach a partial bar to the left of *ß*, but to the *long s*. No native user of the *long s* is alive today and I asked AI about the inconsistency; they didn’t give a shit.
@@ -47,7 +48,7 @@ W3C 很久之前提出了《[日文排版需求](https://w3c.github.io/jlreq/)�
 
 [^text-spacing]: 草案阶段曾叫 `text-spacing`。可以看看[这个知乎讨论](https://www.zhihu.com/question/24978750)。
 
-Firefox 和 Safari[^webkit-feature] 在<ruby>目前<rp>（</rp><rt>2025年</rt><rp>）</rp></ruby>都没有支持。作为有素养的 typographer，以及为了自动解决有歧义的中西文共用标点，本站的标点策略以额外的脚本来实现。
+Firefox 和 Safari[^webkit-feature]在<ruby>目前<rp>（</rp><rt>2025年</rt><rp>）</rp></ruby>都没有支持。作为有素养的 typographer，以及为了自动解决有歧义的中西文共用标点，本站的标点策略以额外的脚本来实现。
 
 [^webkit-feature]: 一般来说，WebKit 对视觉类特性的支持是比较快的，像 `-webkit-backdrop-filter`, `hanging-punctuation`, `text-autospace` 等。
 
@@ -137,14 +138,14 @@ Another view of mine is that cursive with connection lines can fill more space o
 
 [^looking-for-cursive]: After reading this [post](https://www.zhihu.com/question/32058777/answer/1889466682927460615) (amazingly, it’s in Chinese).
 
-Some designers make glyphs the same black width, which look dumb. For example, [JetBrains Mono](https://www.jetbrains.com/lp/mono/) has its `e`, `o`, `O`, and `0` equally wide. *A horse-face uppercase `O`!* 
+Some designers make glyphs the same black width, which look dumb. For example, [JetBrains Mono](https://www.jetbrains.com/lp/mono/) has its `e`, `o`, `O`, and `0` equally wide. *A horse-face uppercase&nbsp;`O` !* 
 
 > *Chinese type designers have actually more advantage on designing monospace typefaces, since they grew up in a world full of square glyphs, and those glyphs require intricate internal balance.* I said.
 
 So I began designing [Caesium](https://github.com/alphaArgon/Caesium). A comprehensive description is available on the repository page.
 
 {%  include figure.html
-    img="typography-stuffs-caesium.svg"
+    img="images/typography-stuffs-caesium.svg"
     caption="Caesium used with the fish shell"  %}
 
 I’m satisfied with Caesium and posted it on [Reddit](https://www.reddit.com/r/typography/comments/1nbix4v/). People disliked it. I still like it.
@@ -156,7 +157,7 @@ Originally I didn’t plan to bring submono to Caesium, thinking cursive is suff
 
 {%  include figure.html
     width="441"
-    img="typography-stuffs-caesium-submono.gif"
+    img="images/typography-stuffs-caesium-submono.gif"
     caption="Caesium with submono on/off"  %}
 
 The size of rules is drastically reduced to a production-ready level. And that’s how submono is made public[^submono-positioning].
@@ -178,7 +179,7 @@ The size of rules is drastically reduced to a production-ready level. And that�
 实现旁注最简单的方法是使用 CSS 的 `float: right`。这也是其它很多旁注方案的基本原理。
 
 {%  include rawfigure.html
-    contents='<blockquote style="margin-right: 25%; max-width: 36em; font-size: min(100%, 3.5vw);"><p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor<small class="accent-text" style="vertical-align: top;">*</small><small style="float: right; width: calc(33% - 2em); margin-right: -33%; display: list-item; list-style-type: '* ';">I can eat glass; it does not hurt me.</small> incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></blockquote>'
+    contents='<blockquote style="margin-right: 25%; max-width: 36em; font-size: min(100%, 3.5vw);"><p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor<small class="accent-text" style="vertical-align: top;">*</small><small style="float: right; width: calc(33% - 2em); margin-right: -33%; display: list-item; list-style-type: \'* \';">I can eat glass; it does not hurt me.</small> incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></blockquote>'
     caption="使用 <code>float</code> 实现旁注" %}
 
 它唯一的问题在于如果要精准地插入到段落内，就不能使用 HTML 预定义的块级元素（`<p>` 不允许块级子元素）。如果愿意用 CSS 和 ARIA 来复现预期的 HTML 的结构，那是最好不过的了。在宽度不足时，也可以很方便地实现段中注。
@@ -188,7 +189,7 @@ The size of rules is drastically reduced to a production-ready level. And that�
 Glyphs app 的网站（例如[此页](https://glyphsapp.com/learn/hinting-manual-truetype-hinting)）使用 `grid` 布局实现旁注。旁注位于右栏，高度设定为 0 且允许溢出。
 
 {%  include rawfigure.html
-    contents='<blockquote style="max-width: 36em; font-size: min(100%, 3.5vw); display: grid; grid-gap: 1em;"><p style="grid-column: 1 / 2; margin: 0;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><small style="display: list-item; list-style-type: '* '; grid-column: 2 / 3; max-width: 8em; height: 0;">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small><p style="grid-column: 1 / 2; margin: 0;">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&nbsp;</p></blockquote>'
+    contents='<blockquote style="max-width: 36em; font-size: min(100%, 3.5vw); display: grid; grid-gap: 1em;"><p style="grid-column: 1 / 2; margin: 0;">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><small style="display: list-item; list-style-type: \'* \'; grid-column: 2 / 3; max-width: 8em; height: 0;">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</small><p style="grid-column: 1 / 2; margin: 0;">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&nbsp;</p></blockquote>'
     caption="Glyphs 使用 <code>grid</code> 实现旁注" %}
 
 它的问题很明显：1) 只能做到对齐段落顶部，2) `display: grid` 破坏了 margin collapsing，并且最致命的是 3) 旁注内容过高时会互相重叠。我觉得这种做法还不如把整段注解给 `float` 出去。

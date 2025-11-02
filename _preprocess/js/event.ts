@@ -219,9 +219,19 @@ if (("ResizeObserver" as string) in window) {
     window.addEventListener("orientationchange", layoutPage);
 }
 
-document.addEventListener("load", () => {
+
+function delayedLayoutPage() {
     requestAnimationFrame(layoutPage);
-}, true /* capture phase */);
+}
+
+document.addEventListener("load", delayedLayoutPage, true /* capture phase */);
+document.addEventListener("error", delayedLayoutPage, true /* capture phase */);
+
+if (document.fonts.addEventListener !== undefined) {
+    document.fonts.addEventListener("loading", delayedLayoutPage);
+    document.fonts.addEventListener("loadingdone", delayedLayoutPage);
+    document.fonts.addEventListener("loadingerror", delayedLayoutPage);
+}
 
 if (document.readyState === "complete") {
     layoutPage();

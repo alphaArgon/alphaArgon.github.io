@@ -1,3 +1,4 @@
+{%- assign url_components = page.url | split: '/' -%}
 {%- assign is_root_page = false -%}
 {%- capture site_badge -%}
     {%- case page.url -%}
@@ -31,7 +32,6 @@
     </title>
     <meta property="og:site_name" content="{{ site.title | escape }}">
     <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
-{%- assign url_components = page.url | split: '/' -%}
 {%- if url_components[1] == "posts" and url_components[2] -%}
     <meta property="og:type" content="article">
     <meta property="og:url" content="{{ page.url | absolute_url }}">

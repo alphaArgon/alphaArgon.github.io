@@ -214,6 +214,14 @@ ul ul ul {list-style-type: circle;}
     font-variant-numeric: normal;
 }
 
+rt /* ruby text */ {
+    font-size: 62.5%;
+    line-height: 1;
+    margin-top: -1em;
+    letter-spacing: 0.1px;
+    font-weight: bold;
+}
+
 .accent-text {
     color: var(--accent-text-color);
 }

@@ -10,14 +10,13 @@
 /** Hints line breaks in inline code. For example, `CTFontCreateWithFontDescriptor` would be
   * `CTFont·Create·With·Font·Descriptor`, and `some_long_name` would be `some_·long_·name`. */
 export function addWBRsToInlineCode(container: Element) {
-    let codes = container.querySelectorAll("code");
-    for (let code of codes) {
+    for (let code of container.querySelectorAll("code")) {
         if (code.parentElement!.tagName === "PRE") {continue;}
         mapEachTextNodeIn(code, node => {
             let fragment = null;
             let prevBreakIndex = 0;
 
-            //  0: whitespace, 1: lowercase, 2: uppercase, 3: digit, 4: quote, 5: other
+            //  0: whitespace, 1: lowercase, 2: uppercase, 3: digit, 4: bar, 5: other
             let prevCharType = 0;
             let text = node.data;
             for (let i = 0; i < text.length; ++i) {
@@ -27,19 +26,24 @@ export function addWBRsToInlineCode(container: Element) {
                 else if (c >= 'a' && c <= 'z') {charType = 1;}
                 else if (c >= 'A' && c <= 'Z') {charType = 2;}
                 else if (c >= '0' && c <= '9') {charType = 3;}
-                else if (c === "'" || c === '"') {charType = 4;}
+                else if (c === '-' || c === '_') {charType = 4;}
                 else {charType = 5;}
 
                 switch (prevCharType * 10 + charType) {
                 case 12: case 13: case 23:
-                case 51: case 52: case 53:
+                case 41: case 42: case 43:
+                    let slice = text.substring(prevBreakIndex, i);
+                    if (slice.trim().length < 3) {
+                        break;  //  Avoid short segments, for example a single prefix `k`.
+                    }
+
                     if (fragment === null) {
                         fragment = document.createDocumentFragment();
                     } else {
                         fragment.appendChild(document.createElement("wbr"));
                     }
 
-                    fragment.append(text.slice(prevBreakIndex, i));
+                    fragment.append(slice);
                     prevBreakIndex = i;
                 }
 
@@ -48,7 +52,7 @@ export function addWBRsToInlineCode(container: Element) {
 
             if (fragment !== null) {
                 fragment.appendChild(document.createElement("wbr"));
-                fragment.append(text.slice(prevBreakIndex));
+                fragment.append(text.substring(prevBreakIndex));
                 return fragment;
             }
 
