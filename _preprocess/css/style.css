@@ -214,6 +214,10 @@ ul ul ul {list-style-type: circle;}
     font-variant-numeric: normal;
 }
 
+.accent-text {
+    color: var(--accent-text-color);
+}
+
 blockquote {
     position: relative;
     padding-left: 2em;

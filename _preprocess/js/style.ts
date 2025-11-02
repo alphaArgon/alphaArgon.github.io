@@ -16,6 +16,13 @@ import { makeProperUnderlines } from "./underline";
 
 window.addEventListener("red.argon.pageLayout", sizeMainContent);
 
+if (document.fonts.addEventListener !== undefined) {
+    let delayedSize = () => requestAnimationFrame(sizeMainContent);
+    document.fonts.addEventListener("loading", delayedSize);
+    document.fonts.addEventListener("loadingdone", delayedSize);
+    document.fonts.addEventListener("loadingerror", delayedSize);
+}
+
 
 function beginSlideshowForHash(hash: string, animated: boolean): boolean {
     let anchor = document.querySelector(`a[href="${hash}"]`);
