@@ -224,13 +224,17 @@ function delayedLayoutPage() {
     requestAnimationFrame(layoutPage);
 }
 
+window.addEventListener("load", delayedLayoutPage);
 document.addEventListener("load", delayedLayoutPage, true /* capture phase */);
-document.addEventListener("error", delayedLayoutPage, true /* capture phase */);
+document.addEventListener("error", event => {
+    if (event.target instanceof Element) {
+        delayedLayoutPage();
+    }
+}, true /* capture phase */);
 
-if (document.fonts.addEventListener !== undefined) {
-    document.fonts.addEventListener("loading", delayedLayoutPage);
+if (document.fonts !== undefined) {
     document.fonts.addEventListener("loadingdone", delayedLayoutPage);
-    document.fonts.addEventListener("loadingerror", delayedLayoutPage);
+    document.fonts.ready.then(delayedLayoutPage);
 }
 
 if (document.readyState === "complete") {

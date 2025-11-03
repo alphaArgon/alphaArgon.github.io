@@ -24,7 +24,7 @@ let ySomeCJIdeo: RegExp;
 try {
     ySomeCJIdeo = /(\p{sc=Hani}|\p{sc=Hira}|\p{sc=Kana}|\p{sc=Bopo})+/uy;
 } catch {
-    ySomeCJIdeo = /[ぁ-ヿㄅ-ㄯ㐀-䶿一-鿿豈-舘]+/y;  //  Some in BMP only.
+    ySomeCJIdeo = /[\u3041-\u30FF\u3105-\u312F\u3400-\u4DBF一-\u9FFF\uF900-\uFA6D]+/y;  //  Some in BMP only.
 }
 
 
