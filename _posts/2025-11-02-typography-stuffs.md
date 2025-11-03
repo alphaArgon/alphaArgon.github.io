@@ -2,7 +2,6 @@
 title: 些许字体排印 & Typography Stuffs
 cover: images/typography-stuffs-banner.png
 excerpt: 我的项目中出现的另类的字体排印。This article will be written bilingually, each language corresponding to the typography of that script.
-revision: 2025-11-02
 ---
 
 > 在看不见的地方做一些看不见的工作，这样别人就会觉得我在摸鱼了。<span lang="en">Feeling great to fuck around with invisible details!</span>

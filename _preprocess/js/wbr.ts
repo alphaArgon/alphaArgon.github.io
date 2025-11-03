@@ -26,7 +26,7 @@ export function addWBRsToInlineCode(container: Element) {
                 else if (c >= 'a' && c <= 'z') {charType = 1;}
                 else if (c >= 'A' && c <= 'Z') {charType = 2;}
                 else if (c >= '0' && c <= '9') {charType = 3;}
-                else if (c === '-' || c === '_') {charType = 4;}
+                else if (c === '-' || c === '_' || c === '/') {charType = 4;}
                 else {charType = 5;}
 
                 switch (prevCharType * 10 + charType) {

@@ -15,7 +15,9 @@ excerpt: 有关 iOS 18, macOS Sequoia, etc. 新增的苹方 VF，及公布在 Gi
 
 ## 新的苹方
 
-私有 UI 字体（下称苹方 UI）储存于系统私有库 FontServices.framework/Versions/Current/Resources/Reserved/PingFangUI.ttc。虽然总体格式仍为 SFNT (Collection)，但实际储存轮廓的表为 Apple 新创的私有 `hvgl`。该新格式并没有公开任何文档，也无任何工具支持——Twitter 上对该格式的讨论也仅限于一些猜测——甚至更神秘的是，将该字体复制出原有目录后，系统也不识别该字体。许多 Unity 开发者注意到了中文字体显示异常：Unity 并不调用系统 API，而是使用了自己内置的渲染引擎，无法解析这一新的表。
+私有 UI 字体（下称苹方 UI）储存于系统私有库 `FontServices.framework/Versions/Current/Resources/Reserved/PingFangUI.ttc`。虽然总体格式仍为 SFNT (Collection)，但实际储存轮廓的表为 Apple 新创的私有 `hvgl`[^hvgl]。该新格式并没有公开任何文档，也无任何工具支持——Twitter 上对该格式的讨论也仅限于一些猜测——甚至更神秘的是，将该字体复制出原有目录后，系统也不识别该字体。许多 Unity 开发者注意到了中文字体显示异常：Unity 并不调用系统 API，而是使用了自己内置的渲染引擎，无法解析这一新的表。
+
+[^hvgl]: 后记：在 WWDC 2025 后，Apple [公开了 `hvgl` 的文档](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6hvgl.html)。
 
 >   关于 `hvgl` 的讨论，可以参见 [\[1\]](https://zhuanlan.zhihu.com/p/703335162), [\[2\]](https://zhuanlan.zhihu.com/p/720942264) 等。
 
@@ -25,7 +27,7 @@ excerpt: 有关 iOS 18, macOS Sequoia, etc. 新增的苹方 VF，及公布在 Gi
 >
 >   iOS/macOS 的字体处理由其图形库 CoreGraphics 直接负责；FontServices 是 CoreGraphics 的子库。尽管如此，CoreGraphics 并没有公开太多字体相关 API，而是由 CoreText 封装后提供给开发者。
 >
->   使用以下的代码载入 苹方 UI：
+>   使用以下的代码载入苹方 UI：
 >
 >   ```swift
 >   let url = URL(fileURLWithPath: "/System/Library/PrivateFrameworks/FontServices.framework/Versions/A/Resources/Reserved/PingFangUI.ttc")
